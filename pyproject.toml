@@ -1,0 +1,26 @@
+[project]
+name = "questline-completability"
+version = "0.0.1"
+description = "LLM 기반 게임 퀘스트 생성에서 상태 변화로 인한 진행 불가 오류 분석 및 개선 - 실험 구현"
+requires-python = ">=3.11"
+dependencies = [
+    # 호출 - OpenRouter 는 표준 라이브러리 urllib 로 부른다 (공급사 SDK 불필요)
+    "pyyaml",
+    "python-dotenv",
+    # 설정집 검증 (worldbible/validate.py)
+    "jsonschema",
+    # 검정력 모의와 분석
+    "numpy",
+    "statsmodels",
+    "scipy",              # 분석의 결합 Wald 검정과 검정력 스크립트 trap-sd (statsmodels 의존성이지만 직접 쓰므로 밝힘)
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["pipeline", "worldbible", "questline"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "worldbible.schema.json",
+  "title": "World Bible",
+  "description": "세계관 설정집 - 정답 판정의 기준. v0 은 이전 주제의 파일럿용 초안, v1 은 퀘스트 라인 실험용(실험 상세 설계 1-1 - 사물 확장과 상태 속성 칸)",
+  "type": "object",
+  "required": [
+    "meta",
+    "entities",
+    "relations",
+    "constraints",
+    "terms",
+    "name_whitelist"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "세계관 이름"
+        },
+        "version": {
+          "type": "string",
+          "description": "v0(이전 주제 파일럿) / v1(퀘스트 라인 실험)"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "description": "인물, 장소, 세력, 사건, 사물",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "name",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]+$"
+          },
+          "type": {
+            "enum": [
+              "character",
+              "place",
+              "faction",
+              "event",
+              "object"
+            ],
+            "description": "faction 은 왕국, 교단, 길드 같은 조직 - 실존 세계관 구조 통계에서 세력 구도가 관계 그래프의 층을 이루므로 엔티티로 둔다(2026-09-07 스키마 소결정)"
+          },
+          "name": {
+            "type": "string",
+            "description": "정식 표기 (화이트리스트에 포함)"
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "별칭, 이표기 (화이트리스트에 포함)"
+          },
+          "description": {
+            "type": "string",
+            "description": "사실 서술 - NLI 판정의 premise 원천"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "자유 속성 (신분, 시대, 소속 등). 사건은 year(세계력 정수)를 두면 validate.py 가 시간 순서 관계를 대조한다. 아래 칸은 규칙 검사기(questline/checker.py)가 세계 상태를 읽는 칸이라 값이 설정집의 이름이어야 한다 - validate.py 가 대조한다",
+            "properties": {
+              "거처": {
+                "type": "string",
+                "description": "인물이 사는 장소 이름. '떠돌이' 는 정해진 거처가 없음"
+              },
+              "died": {
+                "type": "integer",
+                "description": "인물이 죽은 해. 있으면 죽은 인물"
+              },
+              "소유자": {
+                "type": "string",
+                "description": "사물을 지닌 인물이나 세력의 이름"
+              },
+              "보관처": {
+                "type": "string",
+                "description": "사물이 놓인 장소 이름"
+              },
+              "사본 보관처": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "description": "사물의 사본이 있는 장소 이름 - 그곳에서 사본을 얻을 수 있다"
+              },
+              "출입": {
+                "enum": [
+                  "봉인",
+                  "외부인 금지"
+                ],
+                "description": "장소의 출입 제한. 봉인 - 안에서 무엇을 찾거나 받을 수 없음, 외부인 금지 - 플레이어가 들어갈 수 없음. 제한이 없으면 칸을 두지 않는다"
+              },
+              "상위 장소": {
+                "type": "string",
+                "description": "이 장소를 품은 바깥 장소 이름 - 바깥 장소에 사는 인물을 여기서 만날 수 있다"
+              }
+            }
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "description": "엔티티 간 관계 - RAG 청킹 단위이자 모순 판정 근거",
+      "items": {
+        "type": "object",
+        "required": [
+          "subject",
+          "predicate",
+          "object"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "entities.id"
+          },
+          "predicate": {
+            "type": "string",
+            "description": "관계 서술 (예: 스승이다, ~에서 일어났다). 시간 순서는 predicate '이전에 일어났다' 로 적고, 양끝 사건의 attributes.year 와 validate.py 가 대조한다"
+          },
+          "object": {
+            "type": "string",
+            "description": "entities.id"
+          },
+          "description": {
+            "type": "string",
+            "description": "관계를 자연어 한 문장으로 (예: '이센은 카엘라 브렌의 유일한 제자다'). NLI 전제로 쓰이므로 checkable 한 관계는 반드시 채운다 - 없으면 pipeline.nli 가 그 관계를 전제에서 뺀다 (worldbible/validate.py 가 경고)"
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "금지 사실, 톤, 시대 제약",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "statement"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "forbidden_fact",
+              "tone",
+              "era"
+            ]
+          },
+          "statement": {
+            "type": "string",
+            "description": "제약의 사실 서술"
+          },
+          "checkable_by": {
+            "enum": [
+              "rule",
+              "nli"
+            ],
+            "description": "룰 체크리스트로 걸리는지, NLI 판정 대상인지"
+          },
+          "forbidden_terms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "checkable_by=rule 인 제약의 금지어 목록. 본문에 문자열로 나타나면 위반 (pipeline.checker.check_rules)"
+          },
+          "nli_premise": {
+            "type": "string",
+            "description": "checkable_by=nli 인 제약을 NLI 전제로 쓸 때의 사실 문장 (예: '카엘라 브렌은 잿불 전쟁에 참전하지 않았다.'). statement 의 규정문('~를 금지한다')은 NLI 가 오판하므로 사실만 적는다. 없으면 statement 를 쓴다 (pipeline.nli.build_premises)"
+          }
+        }
+      }
+    },
+    "terms": {
+      "type": "array",
+      "description": "엔티티가 아닌 고유명사 - 세계명, 지역명, 종족명, 시대명, 화폐, 재료, 칭호. 관계 그래프에는 들어가지 않고 화이트리스트와 NLI 전제에만 들어간다. RAG 조건에서도 제약처럼 전부 싣는다(작아서 선별 이점이 없고, 빠지면 닫힌 세계 지시가 성립하지 않는다). 2026-09-07 스키마 소결정: 'meta.name 첫 토큰 허용' 관례를 폐기하고 세계명도 여기 둔다",
+      "items": {
+        "type": "object",
+        "required": [
+          "term",
+          "kind",
+          "description"
+        ],
+        "properties": {
+          "term": {
+            "type": "string",
+            "description": "정식 표기 (화이트리스트에 포함)"
+          },
+          "kind": {
+            "enum": [
+              "world",
+              "region",
+              "race",
+              "era",
+              "currency",
+              "material",
+              "title",
+              "other"
+            ]
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "이표기 (화이트리스트에 포함)"
+          },
+          "description": {
+            "type": "string",
+            "description": "사실 서술 한두 문장 - 본문에 term 이 나오면 NLI 전제로 쓴다"
+          }
+        }
+      }
+    },
+    "name_whitelist": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "허용 고유명사 전체 (entities의 name+aliases 와 terms의 term+aliases 의 합집합과 정확히 일치해야 함 - 내적 정합성 스캔 대상). 이 목록 밖 고유명사의 사실 주장형 도입 = 할루시네이션"
+    }
+  }
+}

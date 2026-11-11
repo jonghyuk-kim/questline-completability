@@ -1,0 +1,1205 @@
+# 본실험 라인 풀 v1 (M01~M40) - 실험 상세 설계 1-2, 형식은 부록 B, 작성 규칙은 부록 A. 설정집은 worldbible_v1.
+#
+# 모델에게는 brief 만 보인다(questline/prompting.py). goals, events, probes, solution 은 검사기와 점검 스크립트만 본다.
+#   goals     그 퀘스트가 끝났을 때 이뤄야 할 결과 (hold / dead / met) - 개요가 분명히 요구하는 것만
+#   events    플레이어 밖에서 일어나는 일 (죽음, 인물 사이 이동). 이미 일어난 일로 알리면 at: start, 퀘스트 안에서 일어나면 at: end
+#   probes    함정 지점 - 소유(custody) 2, 죽음(death) 1
+#   solution  모범 풀이 - 퀘스트마다 의뢰인 [인물, 장소] 와 단계 [행동, 인물, 장소, 사물]. scripts/check_lines.py 가 위반 0 을 확인한다
+#
+# 라인마다 같은 뼈대를 쓴다 - 퀘스트 1 에서 플레이어가 사물 하나를 옮기고, 퀘스트 2 에서 인물 하나가 죽는다(죽으며 지니던 사물을
+# 다른 인물에게 남기기도 한다). 나머지 세 퀘스트가 함정 지점이다. 함정 순서(퀘스트 3, 4, 5)는 소유-죽음-소유 13,
+# 죽음-소유-소유 13, 소유-소유-죽음 14 로 고르게 섞는다 - 함정 위치가 오류율에 섞여 들지 않게 한다.
+
+- id: M01
+  giver: 세드릭 몰
+  quests:
+    - brief: 린도르에서 재상 세드릭 몰이 왕이 직접 문서를 봉할 수 있도록 재상의 인장을 엘리안 왕에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [chancellor_seal, elian]}]
+    - brief: 선장 로자 마렌이 풍랑에 목숨을 잃었고, 선원들이 건져 낸 남풍 해도는 여관 주인 미르네가 맡아 두었다는 소식을 붉은 시장에서 듣는다.
+      goals: []
+    - brief: 소금 해안으로 기사를 보낼 뱃길을 정하도록 남풍 해도를 서리 관문의 하렌드 발크에게 가져다준다.
+      goals: [{hold: [south_chart, harend]}]
+    - brief: 재상의 인장을 세드릭 몰에게 가져다준다.
+      goals: [{hold: [chancellor_seal, cedric]}]
+    - brief: 소금 해안 뱃길에 밝은 사람에게 소금 해안에서 철마다 부는 바람과 물때를 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: rosa}
+    - {quest: 2, at: start, hold: [south_chart, mirne]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [bento]
+  solution:
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 세드릭 몰, 린도르, 재상의 인장], [전달, 엘리안, 린도르, 재상의 인장]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 붉은 시장, null], [대화, 미르네, 붉은 시장, null]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 미르네, 붉은 시장, 남풍 해도], [전달, 하렌드 발크, 서리 관문, 남풍 해도]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 엘리안, 린도르, 재상의 인장], [전달, 세드릭 몰, 린도르, 재상의 인장]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 테살 항, null], [대화, 벤토 사르, 테살 항, null]]
+
+- id: M02
+  giver: 하렌
+  quests:
+    - brief: 달빛 나루에서 대장장이 하렌이 관문 대장간에서 쓰도록 별철 망치를 서리 관문의 하렌드 발크에게 내주고 오라고 한다.
+      goals: [{hold: [star_hammer, harend]}]
+    - brief: 달빛 나루의 약초상 마브가 늙어 숨을 거두며 마브의 약상자를 이웃 대장장이 하렌에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 서리 관문의 기사들이 화상을 입었다. 마브의 약상자를 서리 관문의 하렌드 발크에게 가져다준다.
+      goals: [{hold: [herb_chest, harend]}]
+    - brief: 별철 망치를 달빛 나루의 대장장이 하렌에게 가져다준다.
+      goals: [{hold: [star_hammer, haren]}]
+    - brief: 이스카의 옛 모습을 잘 아는 사람에게 무너지기 전 거리의 모습을 듣는다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: mab}
+    - {quest: 2, at: end, hold: [herb_chest, haren]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [oren]
+  solution:
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 하렌, 달빛 나루, 별철 망치], [전달, 하렌드 발크, 서리 관문, 별철 망치]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[대화, 마브, 달빛 나루, null], [조사, null, 달빛 나루, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 하렌, 달빛 나루, 마브의 약상자], [전달, 하렌드 발크, 서리 관문, 마브의 약상자]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 하렌드 발크, 서리 관문, 별철 망치], [전달, 하렌, 달빛 나루, 별철 망치]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[이동, null, 이스카, null], [대화, 오렌 케이, 이스카, null]]
+
+- id: M03
+  giver: 이졸데
+  quests:
+    - brief: 린도르에서 이졸데 공주가 끊어진 은방울 목걸이를 고치도록 스승 미르나에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [silver_necklace, mirna]}]
+    - brief: 고요한 숲에서 배교자 갈렌이 늙어 숨을 거두며 갈렌의 기도서를 실피 장로 라에넬에게 남긴다. 플레이어는 숲에서 장례를 지켜본다.
+      goals: []
+    - brief: 등불 분열 때의 일을 아는 사람에게 분열 때 교단이 무엇을 두고 다투었는지 묻는다.
+      goals: []
+    - brief: 수도원 서고에 두도록 갈렌의 기도서를 하얀 절벽 수도원의 원장 이렌에게 가져다준다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+    - brief: 은방울 목걸이를 이졸데 공주에게 가져다준다.
+      goals: [{hold: [silver_necklace, isolde]}]
+  events:
+    - {quest: 2, at: end, dead: galen}
+    - {quest: 2, at: end, hold: [galen_prayerbook, laenel]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [tovald]
+  solution:
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이졸데, 린도르, 은방울 목걸이], [전달, 미르나, 린도르, 은방울 목걸이]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[대화, 갈렌, 고요한 숲, null], [조사, null, 고요한 숲, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 라에넬, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 미르나, 린도르, 은방울 목걸이], [전달, 이졸데, 린도르, 은방울 목걸이]]
+
+- id: M04
+  giver: 하렌드 발크
+  quests:
+    - brief: 서리 관문에서 하렌드 발크가 서리 뿔피리를 플레이어에게 맡긴다. 플레이어는 뿔피리를 지닌 채 회색 고원으로 오가며, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [frost_horn, player]}]
+    - brief: 바람의 홀에서 오스카르 브란이 숨을 거두었고 서리 뿔잔은 씨족 회의가 새 수장을 뽑을 때까지 린도르의 엘리안 왕에게 맡겼다는 소식을 듣고, 서리 관문의 하렌드 발크에게 알린다.
+      goals: [{met: harend}]
+    - brief: 장례 날까지 축복을 받도록 서리 뿔잔을 등불 대성소의 대사제 토발드에게 가져가 맡겨 둔다.
+      goals: [{hold: [horn_cup, tovald]}]
+    - brief: 회색 고원 연맹을 이끄는 가문 사람에게 브란 가문이 연맹을 이끌어 온 내력을 묻는다.
+      goals: []
+    - brief: 왕궁에 걸어 두도록 서리 뿔피리를 린도르의 엘리안 왕에게 가져다준다.
+      goals: [{hold: [frost_horn, elian]}]
+  events:
+    - {quest: 2, at: start, dead: oskar}
+    - {quest: 2, at: start, hold: [horn_cup, elian]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [kayla]
+  solution:
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 하렌드 발크, 서리 관문, 서리 뿔피리], [이동, null, 바람의 홀, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 서리 관문, null], [대화, 하렌드 발크, 서리 관문, null]]
+    - giver: [토발드, 등불 대성소]
+      steps: [[받기, 엘리안, 린도르, 서리 뿔잔], [전달, 토발드, 등불 대성소, 서리 뿔잔]]
+    - giver: [엘리안, 린도르]
+      steps: [[대화, 카일라 브란, 린도르, null]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 린도르, null], [전달, 엘리안, 린도르, 서리 뿔피리]]
+
+- id: M05
+  giver: 벤토 사르
+  quests:
+    - brief: 테살 항에서 상단주 벤토 사르가 관세를 맞춰 볼 수 있도록 소금 장부를 린도르의 재상 세드릭 몰에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [salt_ledger, cedric]}]
+    - brief: 붉은 시장의 여관에 불이 나 여관 주인 미르네가 목숨을 잃고, 이웃들이 건져 낸 여관 숙박부는 상단주 벤토 사르가 맡는다. 플레이어는 불을 끄는 일을 돕는다.
+      goals: []
+    - brief: 불이 난 날 묵은 손님을 확인하도록 여관 숙박부를 린도르의 재상 세드릭 몰에게 가져가 맡겨 둔다.
+      goals: [{hold: [inn_ledger, cedric]}]
+    - brief: 소금 장부를 테살 항의 벤토 사르에게 가져다준다.
+      goals: [{hold: [salt_ledger, bento]}]
+    - brief: 소금 해안 뱃사람들의 소문에 밝은 사람에게 요즘 붉은 시장에 도는 소문을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: mirne}
+    - {quest: 2, at: end, hold: [inn_ledger, bento]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [rosa]
+  solution:
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 벤토 사르, 테살 항, 소금 장부], [전달, 세드릭 몰, 린도르, 소금 장부]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[대화, 미르네, 붉은 시장, null], [조사, null, 붉은 시장, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 벤토 사르, 테살 항, 여관 숙박부], [전달, 세드릭 몰, 린도르, 여관 숙박부]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 세드릭 몰, 린도르, 소금 장부], [전달, 벤토 사르, 테살 항, 소금 장부]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 테살 항, null], [대화, 로자 마렌, 테살 항, null]]
+
+- id: M06
+  giver: 카일라 브란
+  quests:
+    - brief: 린도르에서 사절 카일라 브란이 바람의 홀의 아버지 오스카르 브란에게서 서리 뿔잔을 받아 와 엘리안 왕과 맹세의 술을 나누도록 자신에게 건네 달라고 한다.
+      goals: [{hold: [horn_cup, kayla]}]
+    - brief: 린도르에서 궁정 마법사 미르나가 병으로 숨을 거두며 검은 우물의 인장을 제자 이졸데 공주에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 검은 우물이 봉인되던 무렵의 일을 아는 사람에게 그때 검은 역병이 어떻게 잦아들었는지 묻는다.
+      goals: []
+    - brief: 기사단이 지키도록 검은 우물의 인장을 서리 관문의 하렌드 발크에게 맡겨 두고 온다.
+      goals: [{hold: [well_seal, harend]}]
+    - brief: 서리 뿔잔을 회색 고원 연맹의 오스카르 브란에게 가져다준다.
+      goals: [{hold: [horn_cup, oskar]}]
+  events:
+    - {quest: 2, at: end, dead: mirna}
+    - {quest: 2, at: end, hold: [well_seal, isolde]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [iren, mab]
+  solution:
+    - giver: [카일라 브란, 린도르]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔잔], [전달, 카일라 브란, 린도르, 서리 뿔잔]]
+    - giver: [미르나, 린도르]
+      steps: [[대화, 미르나, 린도르, null], [조사, null, 린도르, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이졸데, 린도르, 검은 우물의 인장], [전달, 하렌드 발크, 서리 관문, 검은 우물의 인장]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 카일라 브란, 린도르, 서리 뿔잔], [전달, 오스카르 브란, 바람의 홀, 서리 뿔잔]]
+
+- id: M07
+  giver: 하렌드 발크
+  quests:
+    - brief: 서리 관문에서 하렌드 발크가 연맹과 신호를 맞추도록 서리 뿔피리를 바람의 홀의 오스카르 브란에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [frost_horn, oskar]}]
+    - brief: 달빛 나루의 대장장이 하렌이 대장간 사고로 숨졌고 별철 망치는 유언대로, 새벽의 검을 받은 서리 관문의 하렌드 발크에게 보내졌다는 소식을 듣고, 달빛 나루의 약초상 마브에게 전한다.
+      goals: [{met: mab}]
+    - brief: 서리 뿔피리를 서리 관문의 하렌드 발크에게 가져다준다.
+      goals: [{hold: [frost_horn, harend]}]
+    - brief: 별철을 벼려 본 대장장이에게 서리 관문에 달 별철 빗장을 부탁한다.
+      goals: []
+    - brief: 이스카 서고의 쇠문을 여는 데 쓰도록 별철 망치를 학자 오렌 케이에게 가져다준다.
+      goals: [{hold: [star_hammer, oren]}]
+  events:
+    - {quest: 2, at: start, dead: haren}
+    - {quest: 2, at: start, hold: [star_hammer, harend]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [tungar]
+  solution:
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 하렌드 발크, 서리 관문, 서리 뿔피리], [전달, 오스카르 브란, 바람의 홀, 서리 뿔피리]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔피리], [전달, 하렌드 발크, 서리 관문, 서리 뿔피리]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 돌의 심장 입구, null], [대화, 툰가르, 돌의 심장 입구, null]]
+    - giver: [오렌 케이, 이스카]
+      steps: [[받기, 하렌드 발크, 서리 관문, 별철 망치], [전달, 오렌 케이, 이스카, 별철 망치]]
+
+- id: M08
+  giver: 토발드
+  quests:
+    - brief: 등불 대성소에서 대사제 토발드가 하얀 절벽 수도원에서 하얀 절벽 연대기를 받아 와 자신에게 건네 달라고 한다.
+      goals: [{hold: [abbey_chronicle, tovald]}]
+    - brief: 고요한 숲에서 실피 장로 라에넬이 숨을 거두고, 숲의 씨앗 주머니는 숲 사람들이 유언대로 수도원 약초밭에 심도록 하얀 절벽 수도원의 이렌에게 보낸다. 플레이어는 장례를 지켜본다.
+      goals: []
+    - brief: 달빛 나루 둑에 나무를 심도록 숲의 씨앗 주머니를 달빛 나루의 약초상 마브에게 가져다준다.
+      goals: [{hold: [seed_pouch, mab]}]
+    - brief: 하얀 절벽 연대기를 하얀 절벽 수도원의 원장 이렌에게 가져다준다.
+      goals: [{hold: [abbey_chronicle, iren]}]
+    - brief: 고요한 숲의 사정을 잘 아는 사람에게 숲 깊은 곳으로 드는 길을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: laenel}
+    - {quest: 2, at: end, hold: [seed_pouch, iren]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [galen]
+  solution:
+    - giver: [토발드, 등불 대성소]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기], [전달, 토발드, 등불 대성소, 하얀 절벽 연대기]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[대화, 라에넬, 고요한 숲, null], [조사, null, 고요한 숲, null]]
+    - giver: [마브, 달빛 나루]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 숲의 씨앗 주머니], [전달, 마브, 달빛 나루, 숲의 씨앗 주머니]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 토발드, 등불 대성소, 하얀 절벽 연대기], [전달, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기]]
+    - giver: [마브, 달빛 나루]
+      steps: [[이동, null, 고요한 숲, null], [대화, 갈렌, 고요한 숲, null]]
+
+- id: M09
+  giver: 오렌 케이
+  quests:
+    - brief: 달빛 나루에서 학자 오렌 케이가 연맹에 보일 사본을 만들도록 이스카의 지도를 린도르의 사절 카일라 브란에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [iska_map, kayla]}]
+    - brief: 린도르에서 재상 세드릭 몰이 병으로 숨을 거두고, 재상의 인장은 새 재상이 설 때까지 등불 대성소의 대사제 토발드가 맡는다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 관문 통행증을 봉하도록 재상의 인장을 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [chancellor_seal, harend]}]
+    - brief: 왕국의 이름으로 문서를 쓰는 사람에게 왕실 기록에 남길 포고문을 청한다.
+      goals: []
+    - brief: 이스카의 지도를 오렌 케이에게 가져다준다.
+      goals: [{hold: [iska_map, oren]}]
+  events:
+    - {quest: 2, at: end, dead: cedric}
+    - {quest: 2, at: end, hold: [chancellor_seal, tovald]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [elian]
+  solution:
+    - giver: [오렌 케이, 달빛 나루]
+      steps: [[받기, 오렌 케이, 달빛 나루, 이스카의 지도], [전달, 카일라 브란, 린도르, 이스카의 지도]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[대화, 세드릭 몰, 린도르, null], [조사, null, 린도르, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 토발드, 등불 대성소, 재상의 인장], [전달, 하렌드 발크, 서리 관문, 재상의 인장]]
+    - giver: [오렌 케이, 린도르]
+      steps: [[대화, 엘리안, 린도르, null]]
+    - giver: [오렌 케이, 린도르]
+      steps: [[받기, 카일라 브란, 린도르, 이스카의 지도], [전달, 오렌 케이, 린도르, 이스카의 지도]]
+
+- id: M10
+  giver: 미르네
+  quests:
+    - brief: 테살 항 붉은 시장에서 여관 주인 미르네가 왕국 손님 기록과 맞춰 보도록 여관 숙박부를 린도르의 재상 세드릭 몰에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [inn_ledger, cedric]}]
+    - brief: 테살 항을 떠난 선장 로자 마렌이 바다에서 풍랑에 목숨을 잃었고, 선원들이 건져 낸 남풍 해도는 여관 주인 미르네가 맡았다. 플레이어는 테살 항에서 살아남은 선원을 찾는다.
+      goals: []
+    - brief: 여관 숙박부를 붉은 시장의 미르네에게 가져다준다.
+      goals: [{hold: [inn_ledger, mirne]}]
+    - brief: 수도원의 뱃길 기록으로 남도록 남풍 해도를 하얀 절벽 수도원의 원장 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [south_chart, iren]}]
+    - brief: 소금 해안 뱃길에 밝은 사람에게 소금 해안에서 철마다 부는 바람과 물때를 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: rosa}
+    - {quest: 2, at: start, hold: [south_chart, mirne]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [bento]
+  solution:
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 미르네, 붉은 시장, 여관 숙박부], [전달, 세드릭 몰, 린도르, 여관 숙박부]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[이동, null, 테살 항, null], [조사, null, 테살 항, null]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 세드릭 몰, 린도르, 여관 숙박부], [전달, 미르네, 붉은 시장, 여관 숙박부]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 미르네, 붉은 시장, 남풍 해도], [전달, 이렌, 하얀 절벽 수도원, 남풍 해도]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 테살 항, null], [대화, 벤토 사르, 테살 항, null]]
+
+- id: M11
+  giver: 엘리안
+  quests:
+    - brief: 린도르에서 엘리안 왕이 맹세의 술을 나누도록 바람의 홀의 오스카르 브란에게서 서리 뿔잔을 받아 와 자신에게 바쳐 달라고 한다.
+      goals: [{hold: [horn_cup, elian]}]
+    - brief: 잿돌 요새로 가서 반란 잔당 우두머리 베일을 쓰러뜨리고 형제단 명부를 거둔다. 플레이어는 명부를 그 뒤로도 지니고 다닌다.
+      goals: [{dead: veil}, {hold: [brotherhood_roll, player]}]
+    - brief: 남은 잔당을 가려내도록 형제단 명부를 린도르의 재상 세드릭 몰에게 건네 맡겨 둔다.
+      goals: [{hold: [brotherhood_roll, cedric]}]
+    - brief: 잿가지 형제단의 사정을 잘 아는 사람에게 형제단이 골짜기에서 어느 길로 물러났는지 듣는다.
+      goals: []
+    - brief: 서리 뿔잔을 바람의 홀의 오스카르 브란에게 가져다준다.
+      goals: [{hold: [horn_cup, oskar]}]
+  events: []
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [harend]
+  solution:
+    - giver: [엘리안, 린도르]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔잔], [전달, 엘리안, 린도르, 서리 뿔잔]]
+    - giver: [엘리안, 린도르]
+      steps: [[처치, 베일, 잿돌 요새, null], [찾기, null, 잿돌 요새, 형제단 명부]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 린도르, null], [전달, 세드릭 몰, 린도르, 형제단 명부]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[이동, null, 서리 관문, null], [대화, 하렌드 발크, 서리 관문, null]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 엘리안, 린도르, 서리 뿔잔], [전달, 오스카르 브란, 바람의 홀, 서리 뿔잔]]
+
+- id: M12
+  giver: 라에넬
+  quests:
+    - brief: 고요한 숲에서 실피 장로 라에넬이 궁정 뜰에 심도록 숲의 씨앗 주머니를 린도르의 이졸데 공주에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [seed_pouch, isolde]}]
+    - brief: 이스카에서 학자 오렌 케이가 무너진 벽에 깔려 숨졌고 이스카의 지도는 유언대로 린도르의 미르나에게 보내졌다는 소식을 듣고, 고요한 숲의 라에넬에게 전한다.
+      goals: [{met: laenel}]
+    - brief: 폐허를 지킬 기사들이 보도록 이스카의 지도를 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [iska_map, harend]}]
+    - brief: 이스카의 거리와 지하 수로를 잘 아는 사람에게 무너지던 해 사람들이 어느 길로 도시를 빠져나갔는지 묻는다.
+      goals: []
+    - brief: 숲의 씨앗 주머니를 라에넬에게 가져다준다.
+      goals: [{hold: [seed_pouch, laenel]}]
+  events:
+    - {quest: 2, at: start, dead: oren}
+    - {quest: 2, at: start, hold: [iska_map, mirna]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [mab]
+  solution:
+    - giver: [라에넬, 고요한 숲]
+      steps: [[받기, 라에넬, 고요한 숲, 숲의 씨앗 주머니], [전달, 이졸데, 린도르, 숲의 씨앗 주머니]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 고요한 숲, null], [대화, 라에넬, 고요한 숲, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 미르나, 린도르, 이스카의 지도], [전달, 하렌드 발크, 서리 관문, 이스카의 지도]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[받기, 이졸데, 린도르, 숲의 씨앗 주머니], [전달, 라에넬, 고요한 숲, 숲의 씨앗 주머니]]
+
+- id: M13
+  giver: 갈렌
+  quests:
+    - brief: 고요한 숲에서 배교자 갈렌이 갈렌의 기도서를 하얀 절벽 수도원의 원장 이렌에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+    - brief: 서리 관문이 산적에게 습격당해 기사단장 하렌드 발크가 전사하고, 서리 뿔피리는 새 단장이 설 때까지 맡아 두도록 관문 기사들이 린도르의 재상 세드릭 몰에게 보낸다. 플레이어는 습격자를 물리친다.
+      goals: []
+    - brief: 교단 서고에 두도록 갈렌의 기도서를 등불 대성소의 대사제 토발드에게 가져다준다.
+      goals: [{hold: [galen_prayerbook, tovald]}]
+    - brief: 관문의 위급을 연맹에 알리는 데 쓰도록 서리 뿔피리를 바람의 홀의 오스카르 브란에게 가져가 맡겨 둔다.
+      goals: [{hold: [frost_horn, oskar]}]
+    - brief: 잿가지 기사단을 잘 아는 사람에게 기사단과 형제단이 갈라선 내력을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: harend}
+    - {quest: 2, at: end, hold: [frost_horn, cedric]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [elian]
+  solution:
+    - giver: [갈렌, 고요한 숲]
+      steps: [[받기, 갈렌, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[대화, 하렌드 발크, 서리 관문, null], [조사, null, 서리 관문, null]]
+    - giver: [갈렌, 고요한 숲]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 갈렌의 기도서], [전달, 토발드, 등불 대성소, 갈렌의 기도서]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 세드릭 몰, 린도르, 서리 뿔피리], [전달, 오스카르 브란, 바람의 홀, 서리 뿔피리]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+
+- id: M14
+  giver: 로자 마렌
+  quests:
+    - brief: 테살 항에서 선장 로자 마렌이 남풍 해도를 플레이어에게 맡긴다. 플레이어는 해도를 지닌 채 하얀 절벽 수도원까지 가는 뱃길을 익히고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [south_chart, player]}]
+    - brief: 바람의 홀에서 오스카르 브란이 숨을 거두었고 서리 뿔잔은 씨족 회의가 새 수장을 뽑을 때까지 린도르의 엘리안 왕에게 맡겼다는 소식을 듣고, 테살 항의 벤토 사르에게 알린다.
+      goals: [{met: bento}]
+    - brief: 장례 날까지 축복을 받도록 서리 뿔잔을 등불 대성소의 대사제 토발드에게 가져가 맡겨 둔다.
+      goals: [{hold: [horn_cup, tovald]}]
+    - brief: 회색 고원 연맹을 이끄는 가문 사람에게 브란 가문이 연맹을 이끌어 온 내력을 묻는다.
+      goals: []
+    - brief: 수도원의 뱃길 표시로 쓰도록 남풍 해도를 하얀 절벽 수도원의 원장 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [south_chart, iren]}]
+  events:
+    - {quest: 2, at: start, dead: oskar}
+    - {quest: 2, at: start, hold: [horn_cup, elian]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [kayla]
+  solution:
+    - giver: [로자 마렌, 테살 항]
+      steps: [[받기, 로자 마렌, 테살 항, 남풍 해도], [이동, null, 하얀 절벽 수도원, null]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[이동, null, 테살 항, null], [대화, 벤토 사르, 테살 항, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 엘리안, 린도르, 서리 뿔잔], [전달, 토발드, 등불 대성소, 서리 뿔잔]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 린도르, null], [대화, 카일라 브란, 린도르, null]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [전달, 이렌, 하얀 절벽 수도원, 남풍 해도]]
+
+- id: M15
+  giver: 세드릭 몰
+  quests:
+    - brief: 린도르에서 재상 세드릭 몰이 왕실 서고에 두도록 하얀 절벽 수도원의 하얀 절벽 연대기를 받아 와 자신에게 건네 달라고 한다.
+      goals: [{hold: [abbey_chronicle, cedric]}]
+    - brief: 달빛 나루의 약초상 마브가 숨졌고 마브의 약상자는 이웃 대장장이 하렌이 맡았다는 소식을 듣고, 달빛 나루의 하렌에게 조의를 전한다.
+      goals: [{met: haren}]
+    - brief: 이졸데 공주가 열병에 걸렸다. 마브의 약상자를 린도르의 이졸데 공주에게 가져다준다.
+      goals: [{hold: [herb_chest, isolde]}]
+    - brief: 하얀 절벽 연대기를 원장 이렌에게 가져다준다.
+      goals: [{hold: [abbey_chronicle, iren]}]
+    - brief: 이스카의 옛 모습을 잘 아는 사람에게 연대기에서 읽은 이스카 이야기가 맞는지 확인한다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: mab}
+    - {quest: 2, at: start, hold: [herb_chest, haren]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [oren]
+  solution:
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기], [전달, 세드릭 몰, 린도르, 하얀 절벽 연대기]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[이동, null, 달빛 나루, null], [대화, 하렌, 달빛 나루, null]]
+    - giver: [엘리안, 린도르]
+      steps: [[받기, 하렌, 달빛 나루, 마브의 약상자], [전달, 이졸데, 린도르, 마브의 약상자]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 세드릭 몰, 린도르, 하얀 절벽 연대기], [전달, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 이스카, null], [대화, 오렌 케이, 이스카, null]]
+
+- id: M16
+  giver: 이렌
+  quests:
+    - brief: 하얀 절벽 수도원에서 원장 이렌이 옮겨 적을 수 있도록 하얀 절벽 연대기를 학자 오렌 케이에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [abbey_chronicle, oren]}]
+    - brief: 붉은 시장의 여관 주인 미르네가 열병으로 숨졌고 여관 숙박부는 상단주 벤토 사르가 맡았다는 소식을 듣고, 하얀 절벽 수도원의 이렌에게 알린다.
+      goals: [{met: iren}]
+    - brief: 소금 해안 뱃사람들의 소문에 밝은 사람에게 밀수선 선원들 사이에 도는 소문을 묻는다.
+      goals: []
+    - brief: 열병을 앓은 손님을 살피도록 여관 숙박부를 하얀 절벽 수도원의 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [inn_ledger, iren]}]
+    - brief: 하얀 절벽 연대기를 이렌에게 가져다준다.
+      goals: [{hold: [abbey_chronicle, iren]}]
+  events:
+    - {quest: 2, at: start, dead: mirne}
+    - {quest: 2, at: start, hold: [inn_ledger, bento]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [rosa]
+  solution:
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기], [전달, 오렌 케이, 테살 항, 하얀 절벽 연대기]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 테살 항, null], [대화, 로자 마렌, 테살 항, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 벤토 사르, 테살 항, 여관 숙박부], [전달, 이렌, 하얀 절벽 수도원, 여관 숙박부]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 오렌 케이, 테살 항, 하얀 절벽 연대기], [전달, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기]]
+
+- id: M17
+  giver: 툰가르
+  quests:
+    - brief: 돌의 심장 입구 밖에서 드바르 장로 툰가르가 망치 머리를 새로 벼려 주겠다며 달빛 나루의 하렌에게서 별철 망치를 받아 와 자신에게 건네 달라고 한다.
+      goals: [{hold: [star_hammer, tungar]}]
+    - brief: 린도르에서 궁정 마법사 미르나가 병으로 숨을 거두며 검은 우물의 인장을 제자 이졸데 공주에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 별철이 상했는지 살피도록 검은 우물의 인장을 돌의 심장 입구 밖에서 툰가르에게 건네 맡겨 둔다.
+      goals: [{hold: [well_seal, tungar]}]
+    - brief: 검은 우물이 봉인되던 무렵의 일을 아는 사람에게 봉인 뒤에도 역병을 앓은 사람이 있었는지 묻는다.
+      goals: []
+    - brief: 별철 망치를 달빛 나루의 하렌에게 가져다준다.
+      goals: [{hold: [star_hammer, haren]}]
+  events:
+    - {quest: 2, at: end, dead: mirna}
+    - {quest: 2, at: end, hold: [well_seal, isolde]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [iren, mab]
+  solution:
+    - giver: [툰가르, 돌의 심장 입구]
+      steps: [[받기, 하렌, 달빛 나루, 별철 망치], [전달, 툰가르, 돌의 심장 입구, 별철 망치]]
+    - giver: [미르나, 린도르]
+      steps: [[대화, 미르나, 린도르, null], [조사, null, 린도르, null]]
+    - giver: [툰가르, 돌의 심장 입구]
+      steps: [[받기, 이졸데, 린도르, 검은 우물의 인장], [전달, 툰가르, 돌의 심장 입구, 검은 우물의 인장]]
+    - giver: [툰가르, 돌의 심장 입구]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 툰가르, 돌의 심장 입구, 별철 망치], [전달, 하렌, 달빛 나루, 별철 망치]]
+
+- id: M18
+  giver: 핍
+  quests:
+    - brief: 린도르에서 심부름꾼 핍이 이졸데 공주에게서 끊어진 은방울 목걸이를 받아 달빛 나루의 대장장이 하렌에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [silver_necklace, haren]}]
+    - brief: 이스카에서 학자 오렌 케이가 무너진 벽에 깔려 숨졌고 이스카의 지도는 유언대로 린도르의 미르나에게 보내졌다는 소식을 듣고, 달빛 나루의 하렌에게 전한다.
+      goals: [{met: haren}]
+    - brief: 이스카의 거리와 지하 수로를 잘 아는 사람에게 무너지던 해 사람들이 어느 길로 도시를 빠져나갔는지 묻는다.
+      goals: []
+    - brief: 은방울 목걸이를 이졸데 공주에게 가져다준다.
+      goals: [{hold: [silver_necklace, isolde]}]
+    - brief: 연맹에 보일 사본을 만들도록 이스카의 지도를 린도르의 사절 카일라 브란에게 가져가 맡겨 둔다.
+      goals: [{hold: [iska_map, kayla]}]
+  events:
+    - {quest: 2, at: start, dead: oren}
+    - {quest: 2, at: start, hold: [iska_map, mirna]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [mab]
+  solution:
+    - giver: [핍, 린도르]
+      steps: [[받기, 이졸데, 린도르, 은방울 목걸이], [전달, 하렌, 달빛 나루, 은방울 목걸이]]
+    - giver: [핍, 린도르]
+      steps: [[이동, null, 달빛 나루, null], [대화, 하렌, 달빛 나루, null]]
+    - giver: [핍, 린도르]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 하렌, 달빛 나루, 은방울 목걸이], [전달, 이졸데, 린도르, 은방울 목걸이]]
+    - giver: [카일라 브란, 린도르]
+      steps: [[받기, 미르나, 린도르, 이스카의 지도], [전달, 카일라 브란, 린도르, 이스카의 지도]]
+
+- id: M19
+  giver: 하렌
+  quests:
+    - brief: 달빛 나루에서 대장장이 하렌이 화상을 입은 기사들을 위해 이웃 마브에게서 마브의 약상자를 빌려 서리 관문의 하렌드 발크에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [herb_chest, harend]}]
+    - brief: 하얀 절벽 수도원의 원장 이렌이 숨졌고 하얀 절벽 연대기는 교단이 역병 기록을 공부하도록 린도르의 이졸데 공주에게 보냈다는 소식을 듣고, 달빛 나루의 하렌에게 전한다.
+      goals: [{met: haren}]
+    - brief: 마브의 약상자를 마브에게 가져다준다.
+      goals: [{hold: [herb_chest, mab]}]
+    - brief: 새벽의 종의 내력을 아는 사람에게 종을 지키는 수도원의 법도를 묻는다.
+      goals: []
+    - brief: 옮겨 적을 수 있도록 하얀 절벽 연대기를 학자 오렌 케이에게 가져가 맡겨 둔다.
+      goals: [{hold: [abbey_chronicle, oren]}]
+  events:
+    - {quest: 2, at: start, dead: iren}
+    - {quest: 2, at: start, hold: [abbey_chronicle, isolde]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [tovald]
+  solution:
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 마브, 달빛 나루, 마브의 약상자], [전달, 하렌드 발크, 서리 관문, 마브의 약상자]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 달빛 나루, null], [대화, 하렌, 달빛 나루, null]]
+    - giver: [마브, 달빛 나루]
+      steps: [[받기, 하렌드 발크, 서리 관문, 마브의 약상자], [전달, 마브, 달빛 나루, 마브의 약상자]]
+    - giver: [마브, 달빛 나루]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+    - giver: [오렌 케이, 린도르]
+      steps: [[받기, 이졸데, 린도르, 하얀 절벽 연대기], [전달, 오렌 케이, 린도르, 하얀 절벽 연대기]]
+
+- id: M20
+  giver: 하렌드 발크
+  quests:
+    - brief: 서리 관문에서 하렌드 발크가 고원으로 오갈 때 위급을 알리도록 서리 뿔피리를 린도르의 사절 카일라 브란에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [frost_horn, kayla]}]
+    - brief: 고요한 숲의 배교자 갈렌이 숨졌고 갈렌의 기도서는 실피 장로 라에넬이 맡았다는 소식을 듣고, 서리 관문의 하렌드 발크에게 알린다.
+      goals: [{met: harend}]
+    - brief: 교단 서고에 두도록 갈렌의 기도서를 하얀 절벽 수도원의 원장 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+    - brief: 서리 뿔피리를 서리 관문의 하렌드 발크에게 가져다준다.
+      goals: [{hold: [frost_horn, harend]}]
+    - brief: 등불 분열 때의 일을 아는 사람에게 교단이 둘로 갈린 까닭을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: galen}
+    - {quest: 2, at: start, hold: [galen_prayerbook, laenel]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [tovald]
+  solution:
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 하렌드 발크, 서리 관문, 서리 뿔피리], [전달, 카일라 브란, 린도르, 서리 뿔피리]]
+    - giver: [카일라 브란, 린도르]
+      steps: [[이동, null, 서리 관문, null], [대화, 하렌드 발크, 서리 관문, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 라에넬, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 카일라 브란, 린도르, 서리 뿔피리], [전달, 하렌드 발크, 서리 관문, 서리 뿔피리]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+
+- id: M21
+  giver: 미르나
+  quests:
+    - brief: 린도르에서 궁정 마법사 미르나가 검은 우물의 인장을 플레이어에게 맡긴다. 플레이어는 인장을 지닌 채 검은 우물 입구 밖에서 봉인을 살피고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [well_seal, player]}]
+    - brief: 테살 항의 선장 로자 마렌이 풍랑에 목숨을 잃었고, 선원들이 건져 낸 남풍 해도는 단골 여관 주인 미르네가 맡았다. 플레이어는 테살 항에서 살아남은 선원들을 돕는다.
+      goals: []
+    - brief: 소금 해안 뱃길에 밝은 사람에게 소금 해안에서 철마다 부는 바람과 물때를 묻는다.
+      goals: []
+    - brief: 봉인을 지키는 기도를 올리도록 검은 우물의 인장을 등불 대성소의 대사제 토발드에게 맡겨 두고 온다.
+      goals: [{hold: [well_seal, tovald]}]
+    - brief: 소금 해안으로 기사를 보낼 뱃길을 정하도록 남풍 해도를 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [south_chart, harend]}]
+  events:
+    - {quest: 2, at: start, dead: rosa}
+    - {quest: 2, at: start, hold: [south_chart, mirne]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [bento]
+  solution:
+    - giver: [미르나, 린도르]
+      steps: [[받기, 미르나, 린도르, 검은 우물의 인장], [조사, null, 검은 우물 입구, null]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[이동, null, 테살 항, null], [조사, null, 테살 항, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[대화, 벤토 사르, 테살 항, null]]
+    - giver: [미르나, 린도르]
+      steps: [[이동, null, 등불 대성소, null], [전달, 토발드, 등불 대성소, 검은 우물의 인장]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 미르네, 붉은 시장, 남풍 해도], [전달, 하렌드 발크, 서리 관문, 남풍 해도]]
+
+- id: M22
+  giver: 벤토 사르
+  quests:
+    - brief: 테살 항에서 상단주 벤토 사르가 소금 장부를 플레이어에게 맡긴다. 플레이어는 장부를 지닌 채 하얀 절벽 수도원의 이렌을 만나 계약을 적어 넣고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [salt_ledger, player]}, {met: iren}]
+    - brief: 린도르의 재상 세드릭 몰이 숨을 거두었고 재상의 인장은 새 재상이 설 때까지 등불 대성소의 대사제 토발드가 맡았다는 소식을 듣고, 등불 대성소의 토발드에게 조의를 전한다.
+      goals: [{met: tovald}]
+    - brief: 교단 창고 거래를 적어 넣도록 소금 장부를 등불 대성소의 대사제 토발드에게 가져가 맡겨 둔다.
+      goals: [{hold: [salt_ledger, tovald]}]
+    - brief: 관문 통행증을 봉하도록 재상의 인장을 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [chancellor_seal, harend]}]
+    - brief: 왕국의 이름으로 문서를 쓰는 사람에게 소금 길드와의 새 협약을 청한다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: cedric}
+    - {quest: 2, at: start, hold: [chancellor_seal, tovald]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [elian]
+  solution:
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 벤토 사르, 테살 항, 소금 장부], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+    - giver: [토발드, 등불 대성소]
+      steps: [[이동, null, 등불 대성소, null], [전달, 토발드, 등불 대성소, 소금 장부]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 토발드, 등불 대성소, 재상의 인장], [전달, 하렌드 발크, 서리 관문, 재상의 인장]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+
+- id: M23
+  giver: 이졸데
+  quests:
+    - brief: 린도르에서 이졸데 공주가 붉은 시장에서 떨어진 은방울의 짝을 구하도록 은방울 목걸이를 붉은 시장의 여관 주인 미르네에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [silver_necklace, mirne]}]
+    - brief: 고요한 숲에서 실피 장로 라에넬이 숨을 거두고, 숲의 씨앗 주머니는 숲 사람들이 유언대로 수도원 약초밭에 심도록 하얀 절벽 수도원의 이렌에게 보낸다. 플레이어는 숲에서 장례를 지켜본다.
+      goals: []
+    - brief: 고요한 숲의 사정을 잘 아는 사람에게 숲에서 길을 잃지 않는 법을 묻는다.
+      goals: []
+    - brief: 왕궁 뜰에 심도록 숲의 씨앗 주머니를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [seed_pouch, isolde]}]
+    - brief: 끊어진 고리를 고치도록 은방울 목걸이를 달빛 나루의 대장장이 하렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [silver_necklace, haren]}]
+  events:
+    - {quest: 2, at: end, dead: laenel}
+    - {quest: 2, at: end, hold: [seed_pouch, iren]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [galen]
+  solution:
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이졸데, 린도르, 은방울 목걸이], [전달, 미르네, 붉은 시장, 은방울 목걸이]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[대화, 라에넬, 고요한 숲, null], [조사, null, 고요한 숲, null]]
+    - giver: [갈렌, 고요한 숲]
+      steps: [[대화, 갈렌, 고요한 숲, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 숲의 씨앗 주머니], [전달, 이졸데, 린도르, 숲의 씨앗 주머니]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 미르네, 붉은 시장, 은방울 목걸이], [전달, 하렌, 달빛 나루, 은방울 목걸이]]
+
+- id: M24
+  giver: 오스카르 브란
+  quests:
+    - brief: 바람의 홀에서 오스카르 브란이 축복을 받도록 서리 뿔잔을 등불 대성소의 대사제 토발드에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [horn_cup, tovald]}]
+    - brief: 달빛 나루의 대장장이 하렌이 대장간 사고로 크게 다쳐 숨을 거두고, 별철 망치는 마을 사람들이 유언대로, 새벽의 검을 받은 서리 관문의 하렌드 발크에게 보낸다. 플레이어는 하렌을 돌본다.
+      goals: []
+    - brief: 서리 뿔잔을 오스카르 브란에게 가져다준다.
+      goals: [{hold: [horn_cup, oskar]}]
+    - brief: 이스카 서고의 쇠문을 여는 데 쓰도록 별철 망치를 학자 오렌 케이에게 가져다준다.
+      goals: [{hold: [star_hammer, oren]}]
+    - brief: 별철을 벼려 본 대장장이에게 바람의 홀 문에 달 별철 빗장을 부탁한다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: haren}
+    - {quest: 2, at: end, hold: [star_hammer, harend]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [tungar]
+  solution:
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔잔], [전달, 토발드, 등불 대성소, 서리 뿔잔]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[대화, 하렌, 달빛 나루, null], [조사, null, 달빛 나루, null]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 토발드, 등불 대성소, 서리 뿔잔], [전달, 오스카르 브란, 바람의 홀, 서리 뿔잔]]
+    - giver: [오렌 케이, 이스카]
+      steps: [[받기, 하렌드 발크, 서리 관문, 별철 망치], [전달, 오렌 케이, 이스카, 별철 망치]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[이동, null, 돌의 심장 입구, null], [대화, 툰가르, 돌의 심장 입구, null]]
+
+- id: M25
+  giver: 마브
+  quests:
+    - brief: 달빛 나루에서 약초상 마브가 열병 손님을 돌보도록 마브의 약상자를 붉은 시장의 여관 주인 미르네에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [herb_chest, mirne]}]
+    - brief: 등불 대성소에서 대사제 토발드가 늙어 숨을 거둔다. 플레이어는 교단 사람들과 장례를 치른다.
+      goals: []
+    - brief: 열병을 돌보도록 마브의 약상자를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [herb_chest, isolde]}]
+    - brief: 등불 교단의 어른에게 공주의 열병이 낫기를 비는 기도를 청한다.
+      goals: []
+    - brief: 마브의 약상자를 마브에게 가져다준다.
+      goals: [{hold: [herb_chest, mab]}]
+  events:
+    - {quest: 2, at: end, dead: tovald}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [iren]
+  solution:
+    - giver: [마브, 달빛 나루]
+      steps: [[받기, 마브, 달빛 나루, 마브의 약상자], [전달, 미르네, 붉은 시장, 마브의 약상자]]
+    - giver: [토발드, 등불 대성소]
+      steps: [[대화, 토발드, 등불 대성소, null], [조사, null, 등불 대성소, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 미르네, 붉은 시장, 마브의 약상자], [전달, 이졸데, 린도르, 마브의 약상자]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [마브, 달빛 나루]
+      steps: [[받기, 이졸데, 린도르, 마브의 약상자], [전달, 마브, 달빛 나루, 마브의 약상자]]
+
+- id: M26
+  giver: 세드릭 몰
+  quests:
+    - brief: 린도르에서 재상 세드릭 몰이 왕국 문서를 대성소에서 지키도록 재상의 인장을 등불 대성소의 대사제 토발드에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [chancellor_seal, tovald]}]
+    - brief: 달빛 나루의 약초상 마브가 늙어 숨을 거두며 마브의 약상자를 이웃 대장장이 하렌에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 재상의 인장을 세드릭 몰에게 가져다준다.
+      goals: [{hold: [chancellor_seal, cedric]}]
+    - brief: 이스카의 옛 모습을 잘 아는 사람에게 무너지기 전 성문이 어디에 있었는지 묻는다.
+      goals: []
+    - brief: 고원 씨족의 열병을 돌보도록 마브의 약상자를 바람의 홀의 오스카르 브란에게 가져가 맡겨 둔다.
+      goals: [{hold: [herb_chest, oskar]}]
+  events:
+    - {quest: 2, at: end, dead: mab}
+    - {quest: 2, at: end, hold: [herb_chest, haren]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [oren]
+  solution:
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 세드릭 몰, 린도르, 재상의 인장], [전달, 토발드, 등불 대성소, 재상의 인장]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[대화, 마브, 달빛 나루, null], [조사, null, 달빛 나루, null]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 토발드, 등불 대성소, 재상의 인장], [전달, 세드릭 몰, 린도르, 재상의 인장]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[이동, null, 이스카, null], [대화, 오렌 케이, 이스카, null]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 하렌, 달빛 나루, 마브의 약상자], [전달, 오스카르 브란, 바람의 홀, 마브의 약상자]]
+
+- id: M27
+  giver: 베일
+  quests:
+    - brief: 잿돌 요새에서 반란 잔당 우두머리 베일이 항복의 표시로 다르고의 가면을 린도르의 엘리안 왕에게 바쳐 달라고 한다.
+      goals: [{hold: [dargo_mask, elian]}]
+    - brief: 이스카에서 학자 오렌 케이가 숨졌고 이스카의 지도는 유언대로 린도르의 미르나에게 보내졌다는 소식을 듣고, 린도르의 엘리안 왕에게 알린다.
+      goals: [{met: elian}]
+    - brief: 왕실 서고에 두도록 이스카의 지도를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [iska_map, isolde]}]
+    - brief: 이스카의 거리와 지하 수로를 잘 아는 사람에게 무너지던 해 사람들이 어느 길로 도시를 빠져나갔는지 묻는다.
+      goals: []
+    - brief: 기사단이 잿돌 전투의 전리품으로 간직하도록 다르고의 가면을 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [dargo_mask, harend]}]
+  events:
+    - {quest: 2, at: start, dead: oren}
+    - {quest: 2, at: start, hold: [iska_map, mirna]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [mab]
+  solution:
+    - giver: [베일, 잿돌 요새]
+      steps: [[받기, 베일, 잿돌 요새, 다르고의 가면], [전달, 엘리안, 린도르, 다르고의 가면]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 미르나, 린도르, 이스카의 지도], [전달, 이졸데, 린도르, 이스카의 지도]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 엘리안, 린도르, 다르고의 가면], [전달, 하렌드 발크, 서리 관문, 다르고의 가면]]
+
+- id: M28
+  giver: 하렌드 발크
+  quests:
+    - brief: 서리 관문에서 하렌드 발크가 잿돌 요새로 가서 반란 잔당 우두머리 베일을 쓰러뜨리고 형제단 명부를 거두라고 한다. 플레이어는 거둔 명부를 그 뒤로도 지니고 다닌다.
+      goals: [{dead: veil}, {hold: [brotherhood_roll, player]}]
+    - brief: 하얀 절벽 수도원의 원장 이렌이 숨졌고 하얀 절벽 연대기는 린도르의 궁정 마법사 미르나에게 보내졌다는 소식을 듣고, 서리 관문의 하렌드 발크에게 토벌을 마쳤다고 알린다.
+      goals: [{met: harend}]
+    - brief: 새벽의 종의 내력을 아는 사람에게 종을 지키는 수도원의 법도를 묻는다.
+      goals: []
+    - brief: 남은 잔당을 가려내도록 형제단 명부를 린도르의 재상 세드릭 몰에게 건네 맡겨 둔다.
+      goals: [{hold: [brotherhood_roll, cedric]}]
+    - brief: 역병 기록을 공부하도록 하얀 절벽 연대기를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [abbey_chronicle, isolde]}]
+  events:
+    - {quest: 2, at: start, dead: iren}
+    - {quest: 2, at: start, hold: [abbey_chronicle, mirna]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [tovald]
+  solution:
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[처치, 베일, 잿돌 요새, null], [찾기, null, 잿돌 요새, 형제단 명부]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 서리 관문, null], [대화, 하렌드 발크, 서리 관문, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[이동, null, 린도르, null], [전달, 세드릭 몰, 린도르, 형제단 명부]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 미르나, 린도르, 하얀 절벽 연대기], [전달, 이졸데, 린도르, 하얀 절벽 연대기]]
+
+- id: M29
+  giver: 오렌 케이
+  quests:
+    - brief: 이스카에서 학자 오렌 케이가 이스카의 지도를 플레이어에게 맡긴다. 플레이어는 지도를 지닌 채 이스카의 무너진 거리를 살펴보고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [iska_map, player]}]
+    - brief: 회색 고원으로 가던 사절 카일라 브란이 고갯길 눈사태로 목숨을 잃었다는 소식을 듣고, 린도르의 엘리안 왕에게 알린다.
+      goals: [{met: elian}]
+    - brief: 역사 공부에 쓰도록 이스카의 지도를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [iska_map, isolde]}]
+    - brief: 회색 고원 연맹을 대신해 말할 수 있는 사람에게 연맹이 왕국에 바라는 일이 무엇인지 묻는다.
+      goals: []
+    - brief: 이스카의 지도를 오렌 케이에게 가져다준다.
+      goals: [{hold: [iska_map, oren]}]
+  events:
+    - {quest: 2, at: start, dead: kayla}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [oskar]
+  solution:
+    - giver: [오렌 케이, 이스카]
+      steps: [[받기, 오렌 케이, 이스카, 이스카의 지도], [조사, null, 이스카, null]]
+    - giver: [오렌 케이, 이스카]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 린도르, null], [전달, 이졸데, 린도르, 이스카의 지도]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 바람의 홀, null], [대화, 오스카르 브란, 바람의 홀, null]]
+    - giver: [오렌 케이, 이스카]
+      steps: [[받기, 이졸데, 린도르, 이스카의 지도], [전달, 오렌 케이, 이스카, 이스카의 지도]]
+
+- id: M30
+  giver: 미르네
+  quests:
+    - brief: 테살 항 붉은 시장에서 여관 주인 미르네가 왕국 손님 기록과 맞춰 보도록 여관 숙박부를 린도르의 재상 세드릭 몰에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [inn_ledger, cedric]}]
+    - brief: 달빛 나루의 대장장이 하렌이 숨을 거두었고 별철 망치는 유언대로, 새벽의 검을 받은 서리 관문의 하렌드 발크에게 보내졌다는 소식을 듣고, 붉은 시장의 미르네에게 전한다.
+      goals: [{met: mirne}]
+    - brief: 별철을 벼려 본 대장장이에게 로자 마렌의 배에 쓸 별철 닻고리를 부탁한다.
+      goals: []
+    - brief: 이스카 서고의 쇠문을 여는 데 쓰도록 별철 망치를 학자 오렌 케이에게 가져다준다.
+      goals: [{hold: [star_hammer, oren]}]
+    - brief: 여관 숙박부를 붉은 시장의 미르네에게 가져다준다.
+      goals: [{hold: [inn_ledger, mirne]}]
+  events:
+    - {quest: 2, at: start, dead: haren}
+    - {quest: 2, at: start, hold: [star_hammer, harend]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [tungar]
+  solution:
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 미르네, 붉은 시장, 여관 숙박부], [전달, 세드릭 몰, 린도르, 여관 숙박부]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[이동, null, 붉은 시장, null], [대화, 미르네, 붉은 시장, null]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[이동, null, 돌의 심장 입구, null], [대화, 툰가르, 돌의 심장 입구, null]]
+    - giver: [오렌 케이, 이스카]
+      steps: [[받기, 하렌드 발크, 서리 관문, 별철 망치], [전달, 오렌 케이, 이스카, 별철 망치]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 세드릭 몰, 린도르, 여관 숙박부], [전달, 미르네, 붉은 시장, 여관 숙박부]]
+
+- id: M31
+  giver: 이렌
+  quests:
+    - brief: 하얀 절벽 수도원에서 원장 이렌이 하얀 절벽 연대기를 플레이어에게 맡긴다. 플레이어는 연대기를 지닌 채 검은 역병 기록을 찾아 읽고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [abbey_chronicle, player]}]
+    - brief: 고요한 숲에서 배교자 갈렌이 숨졌고 갈렌의 기도서는 실피 장로 라에넬이 맡았다는 소식을 듣고, 하얀 절벽 수도원의 이렌에게 알린다.
+      goals: [{met: iren}]
+    - brief: 교단 서고에 두도록 갈렌의 기도서를 하얀 절벽 수도원의 원장 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+    - brief: 역병 기록을 공부하도록 하얀 절벽 연대기를 린도르의 이졸데 공주에게 건네 맡겨 둔다.
+      goals: [{hold: [abbey_chronicle, isolde]}]
+    - brief: 등불 분열 때의 일을 아는 사람에게 교단이 둘로 갈린 까닭을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: galen}
+    - {quest: 2, at: start, hold: [galen_prayerbook, laenel]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [tovald]
+  solution:
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 하얀 절벽 연대기], [조사, null, 하얀 절벽 수도원, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 라에넬, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 린도르, null], [전달, 이졸데, 린도르, 하얀 절벽 연대기]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+
+- id: M32
+  giver: 이렌
+  quests:
+    - brief: 하얀 절벽 수도원에서 원장 이렌이 고요한 숲의 갈렌에게서 갈렌의 기도서를 받아 와 자신에게 건네 달라고 한다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+    - brief: 고요한 숲에서 배교자 갈렌이 늙어 숨을 거둔다. 플레이어는 실피 장로 라에넬을 만나 함께 장례를 지켜본다.
+      goals: [{met: laenel}]
+    - brief: 등불 분열 때의 일을 아는 사람에게 분열 때 대성소에서 벌어진 일을 묻는다.
+      goals: []
+    - brief: 숲에서 장례 기도를 올리도록 갈렌의 기도서를 실피 장로 라에넬에게 가져가 맡겨 둔다.
+      goals: [{hold: [galen_prayerbook, laenel]}]
+    - brief: 수도원 서고에 두도록 갈렌의 기도서를 하얀 절벽 수도원의 이렌에게 가져다준다.
+      goals: [{hold: [galen_prayerbook, iren]}]
+  events:
+    - {quest: 2, at: end, dead: galen}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [tovald]
+  solution:
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 갈렌, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[대화, 갈렌, 고요한 숲, null], [대화, 라에넬, 고요한 숲, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 등불 대성소, null], [대화, 토발드, 등불 대성소, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 갈렌의 기도서], [전달, 라에넬, 고요한 숲, 갈렌의 기도서]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 라에넬, 고요한 숲, 갈렌의 기도서], [전달, 이렌, 하얀 절벽 수도원, 갈렌의 기도서]]
+
+- id: M33
+  giver: 이졸데
+  quests:
+    - brief: 린도르에서 이졸데 공주가 은방울 목걸이를 플레이어에게 맡긴다. 플레이어는 목걸이를 지닌 채 달빛 나루의 대장장이 하렌을 만나 고리를 손보고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [silver_necklace, player]}, {met: haren}]
+    - brief: 린도르로 돌아오니 궁정 마법사 미르나가 병석에 있다. 미르나가 숨을 거두며 검은 우물의 인장을 제자 이졸데 공주에게 남긴다.
+      goals: []
+    - brief: 공주의 생일까지 맡아 두도록 은방울 목걸이를 린도르의 엘리안 왕에게 건넨다.
+      goals: [{hold: [silver_necklace, elian]}]
+    - brief: 검은 우물이 봉인되던 무렵의 일을 아는 사람에게 봉인 직후 역병이 어떻게 잦아들었는지 묻는다.
+      goals: []
+    - brief: 왕실 보물고에 두도록 검은 우물의 인장을 린도르의 엘리안 왕에게 맡겨 두고 온다.
+      goals: [{hold: [well_seal, elian]}]
+  events:
+    - {quest: 2, at: end, dead: mirna}
+    - {quest: 2, at: end, hold: [well_seal, isolde]}
+  probes: {3: custody, 4: death, 5: custody}
+  death_answerers: [iren, mab]
+  solution:
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이졸데, 린도르, 은방울 목걸이], [대화, 하렌, 달빛 나루, null]]
+    - giver: [미르나, 린도르]
+      steps: [[이동, null, 린도르, null], [대화, 미르나, 린도르, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 린도르, null], [전달, 엘리안, 린도르, 은방울 목걸이]]
+    - giver: [이졸데, 린도르]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [이졸데, 린도르]
+      steps: [[받기, 이졸데, 린도르, 검은 우물의 인장], [전달, 엘리안, 린도르, 검은 우물의 인장]]
+
+- id: M34
+  giver: 하렌
+  quests:
+    - brief: 달빛 나루에서 대장장이 하렌이 별철 망치를 플레이어에게 맡긴다. 플레이어는 망치를 지닌 채 돌의 심장 입구 밖에서 드바르 장로 툰가르를 만나 망치를 보여 주고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [star_hammer, player]}, {met: tungar}]
+    - brief: 달빛 나루로 돌아오니 약초상 마브가 숨을 거두며 마브의 약상자를 이웃 대장장이 하렌에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 이스카의 옛 모습을 잘 아는 사람에게 역병 전 시장 거리가 어떤 모습이었는지 묻는다.
+      goals: []
+    - brief: 병자를 돌보도록 마브의 약상자를 하얀 절벽 수도원의 원장 이렌에게 가져가 맡겨 둔다.
+      goals: [{hold: [herb_chest, iren]}]
+    - brief: 망치 머리를 새로 벼리도록 별철 망치를 돌의 심장 입구 밖에서 드바르 장로 툰가르에게 가져가 맡겨 둔다.
+      goals: [{hold: [star_hammer, tungar]}]
+  events:
+    - {quest: 2, at: end, dead: mab}
+    - {quest: 2, at: end, hold: [herb_chest, haren]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [oren]
+  solution:
+    - giver: [하렌, 달빛 나루]
+      steps: [[받기, 하렌, 달빛 나루, 별철 망치], [대화, 툰가르, 돌의 심장 입구, null]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[이동, null, 이스카, null], [대화, 오렌 케이, 이스카, null]]
+    - giver: [이렌, 하얀 절벽 수도원]
+      steps: [[받기, 하렌, 달빛 나루, 마브의 약상자], [전달, 이렌, 하얀 절벽 수도원, 마브의 약상자]]
+    - giver: [하렌, 달빛 나루]
+      steps: [[이동, null, 돌의 심장 입구, null], [전달, 툰가르, 돌의 심장 입구, 별철 망치]]
+
+- id: M35
+  giver: 세드릭 몰
+  quests:
+    - brief: 린도르에서 재상 세드릭 몰이 붉은 시장의 미르네에게서 여관 숙박부를 받아 와 자신에게 건네 달라고 한다.
+      goals: [{hold: [inn_ledger, cedric]}]
+    - brief: 선장 로자 마렌이 풍랑에 목숨을 잃었고 선원들이 건져 낸 남풍 해도는 여관 주인 미르네가 맡았다는 소식을 듣고, 린도르의 세드릭 몰에게 알린다.
+      goals: [{met: cedric}]
+    - brief: 관세를 매길 뱃길을 정하도록 남풍 해도를 린도르의 재상 세드릭 몰에게 가져가 맡겨 둔다.
+      goals: [{hold: [south_chart, cedric]}]
+    - brief: 여관 숙박부를 붉은 시장의 미르네에게 가져다준다.
+      goals: [{hold: [inn_ledger, mirne]}]
+    - brief: 소금 해안 뱃길에 밝은 사람에게 소금 해안에서 철마다 부는 바람과 물때를 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: rosa}
+    - {quest: 2, at: start, hold: [south_chart, mirne]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [bento]
+  solution:
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 미르네, 붉은 시장, 여관 숙박부], [전달, 세드릭 몰, 린도르, 여관 숙박부]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[이동, null, 린도르, null], [대화, 세드릭 몰, 린도르, null]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 미르네, 붉은 시장, 남풍 해도], [전달, 세드릭 몰, 린도르, 남풍 해도]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[받기, 세드릭 몰, 린도르, 여관 숙박부], [전달, 미르네, 붉은 시장, 여관 숙박부]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[이동, null, 테살 항, null], [대화, 벤토 사르, 테살 항, null]]
+
+- id: M36
+  giver: 오스카르 브란
+  quests:
+    - brief: 바람의 홀에서 오스카르 브란이 서리 뿔잔을 플레이어에게 맡긴다. 플레이어는 뿔잔을 지닌 채 서리 관문에서 하렌드 발크를 만나 맹세의 술을 나누고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [horn_cup, player]}, {met: harend}]
+    - brief: 린도르에서 재상 세드릭 몰이 숨을 거두고, 재상의 인장은 새 재상이 설 때까지 등불 대성소의 대사제 토발드가 맡는다. 플레이어는 연맹의 조문을 전한다.
+      goals: []
+    - brief: 왕국의 이름으로 문서를 쓰는 사람에게 연맹과 나눌 맹세 문서를 청한다.
+      goals: []
+    - brief: 연맹 사절이 맹세 의식에 쓰도록 서리 뿔잔을 린도르의 사절 카일라 브란에게 가져다준다.
+      goals: [{hold: [horn_cup, kayla]}]
+    - brief: 관문 통행증을 봉하도록 재상의 인장을 서리 관문의 하렌드 발크에게 가져가 맡겨 둔다.
+      goals: [{hold: [chancellor_seal, harend]}]
+  events:
+    - {quest: 2, at: end, dead: cedric}
+    - {quest: 2, at: end, hold: [chancellor_seal, tovald]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [elian]
+  solution:
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔잔], [대화, 하렌드 발크, 서리 관문, null]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[대화, 세드릭 몰, 린도르, null], [조사, null, 린도르, null]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[이동, null, 린도르, null], [전달, 카일라 브란, 린도르, 서리 뿔잔]]
+    - giver: [오스카르 브란, 바람의 홀]
+      steps: [[받기, 토발드, 등불 대성소, 재상의 인장], [전달, 하렌드 발크, 서리 관문, 재상의 인장]]
+
+- id: M37
+  giver: 라에넬
+  quests:
+    - brief: 고요한 숲에서 실피 장로 라에넬이 숲의 씨앗 주머니를 플레이어에게 맡긴다. 플레이어는 주머니를 지닌 채 이스카에 씨앗을 뿌릴 자리를 찾고, 그 뒤로도 지니고 다닌다.
+      goals: [{hold: [seed_pouch, player]}]
+    - brief: 학자 오렌 케이가 이스카에서 무너진 벽에 깔려 숨졌고 이스카의 지도는 유언대로 린도르의 미르나에게 보내졌다는 소식을 듣고, 고요한 숲의 라에넬에게 전한다.
+      goals: [{met: laenel}]
+    - brief: 궁정 뜰에 심도록 숲의 씨앗 주머니를 린도르의 이졸데 공주에게 가져가 맡겨 둔다.
+      goals: [{hold: [seed_pouch, isolde]}]
+    - brief: 연맹에 보일 사본을 만들도록 이스카의 지도를 린도르의 사절 카일라 브란에게 가져가 맡겨 둔다.
+      goals: [{hold: [iska_map, kayla]}]
+    - brief: 이스카의 거리와 지하 수로를 잘 아는 사람에게 무너지던 해 사람들이 어느 길로 도시를 빠져나갔는지 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: start, dead: oren}
+    - {quest: 2, at: start, hold: [iska_map, mirna]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [mab]
+  solution:
+    - giver: [라에넬, 고요한 숲]
+      steps: [[받기, 라에넬, 고요한 숲, 숲의 씨앗 주머니], [조사, null, 이스카, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 고요한 숲, null], [대화, 라에넬, 고요한 숲, null]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 린도르, null], [전달, 이졸데, 린도르, 숲의 씨앗 주머니]]
+    - giver: [카일라 브란, 린도르]
+      steps: [[받기, 미르나, 린도르, 이스카의 지도], [전달, 카일라 브란, 린도르, 이스카의 지도]]
+    - giver: [라에넬, 고요한 숲]
+      steps: [[이동, null, 달빛 나루, null], [대화, 마브, 달빛 나루, null]]
+
+- id: M38
+  giver: 로자 마렌
+  quests:
+    - brief: 테살 항에서 선장 로자 마렌이 수도원의 뱃길 표시로 쓰도록 남풍 해도를 하얀 절벽 수도원의 원장 이렌에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [south_chart, iren]}]
+    - brief: 서리 관문이 산적에게 습격당해 기사단장 하렌드 발크가 전사했고 서리 뿔피리는 새 단장이 설 때까지 맡아 두도록 린도르의 재상 세드릭 몰에게 보내졌다는 소식을 듣고, 테살 항의 로자 마렌에게 알린다.
+      goals: [{met: rosa}]
+    - brief: 잿가지 기사단을 잘 아는 사람에게 기사단이 관문을 지켜 온 내력을 묻는다.
+      goals: []
+    - brief: 남풍 해도를 로자 마렌에게 가져다준다.
+      goals: [{hold: [south_chart, rosa]}]
+    - brief: 항구의 위급을 알리는 데 쓰도록 서리 뿔피리를 테살 항의 상단주 벤토 사르에게 가져가 맡겨 둔다.
+      goals: [{hold: [frost_horn, bento]}]
+  events:
+    - {quest: 2, at: start, dead: harend}
+    - {quest: 2, at: start, hold: [frost_horn, cedric]}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [elian]
+  solution:
+    - giver: [로자 마렌, 테살 항]
+      steps: [[받기, 로자 마렌, 테살 항, 남풍 해도], [전달, 이렌, 하얀 절벽 수도원, 남풍 해도]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[이동, null, 테살 항, null], [대화, 로자 마렌, 테살 항, null]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[이동, null, 린도르, null], [대화, 엘리안, 린도르, null]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[받기, 이렌, 하얀 절벽 수도원, 남풍 해도], [전달, 로자 마렌, 테살 항, 남풍 해도]]
+    - giver: [로자 마렌, 테살 항]
+      steps: [[받기, 세드릭 몰, 린도르, 서리 뿔피리], [전달, 벤토 사르, 테살 항, 서리 뿔피리]]
+
+- id: M39
+  giver: 벤토 사르
+  quests:
+    - brief: 테살 항에서 상단주 벤토 사르가 연맹과의 교역을 맞춰 보도록 소금 장부를 린도르의 사절 카일라 브란에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [salt_ledger, kayla]}]
+    - brief: 붉은 시장의 여관 주인 미르네가 열병으로 숨을 거두며 여관 숙박부를 상단주 벤토 사르에게 남긴다. 플레이어는 장례를 돕는다.
+      goals: []
+    - brief: 소금 장부를 벤토 사르에게 가져다준다.
+      goals: [{hold: [salt_ledger, bento]}]
+    - brief: 열병이 퍼진 길을 조사하도록 여관 숙박부를 린도르의 재상 세드릭 몰에게 가져가 맡겨 둔다.
+      goals: [{hold: [inn_ledger, cedric]}]
+    - brief: 소금 해안 뱃사람들의 소문에 밝은 사람에게 요즘 소금 해안에 도는 소문을 묻는다.
+      goals: []
+  events:
+    - {quest: 2, at: end, dead: mirne}
+    - {quest: 2, at: end, hold: [inn_ledger, bento]}
+  probes: {3: custody, 4: custody, 5: death}
+  death_answerers: [rosa]
+  solution:
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 벤토 사르, 테살 항, 소금 장부], [전달, 카일라 브란, 린도르, 소금 장부]]
+    - giver: [미르네, 붉은 시장]
+      steps: [[대화, 미르네, 붉은 시장, null], [조사, null, 붉은 시장, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 카일라 브란, 린도르, 소금 장부], [전달, 벤토 사르, 테살 항, 소금 장부]]
+    - giver: [세드릭 몰, 린도르]
+      steps: [[받기, 벤토 사르, 테살 항, 여관 숙박부], [전달, 세드릭 몰, 린도르, 여관 숙박부]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[이동, null, 테살 항, null], [대화, 로자 마렌, 테살 항, null]]
+
+- id: M40
+  giver: 엘리안
+  quests:
+    - brief: 린도르에서 엘리안 왕이 연맹과 신호를 맞추도록 서리 관문의 하렌드 발크에게서 서리 뿔피리를 받아 바람의 홀의 오스카르 브란에게 맡겨 두고 오라고 한다.
+      goals: [{hold: [frost_horn, oskar]}]
+    - brief: 등불 대성소에서 대사제 토발드가 늙어 숨을 거둔다. 플레이어는 엘리안 왕을 만나 함께 장례를 치른다.
+      goals: [{met: elian}]
+    - brief: 등불 교단의 어른에게 꺼지지 않는 등불을 모시는 의식을 묻는다.
+      goals: []
+    - brief: 항구의 위급을 알리는 데 쓰도록 서리 뿔피리를 테살 항의 상단주 벤토 사르에게 가져가 맡겨 둔다.
+      goals: [{hold: [frost_horn, bento]}]
+    - brief: 서리 뿔피리를 하렌드 발크에게 가져다준다.
+      goals: [{hold: [frost_horn, harend]}]
+  events:
+    - {quest: 2, at: end, dead: tovald}
+  probes: {3: death, 4: custody, 5: custody}
+  death_answerers: [iren]
+  solution:
+    - giver: [엘리안, 린도르]
+      steps: [[받기, 하렌드 발크, 서리 관문, 서리 뿔피리], [전달, 오스카르 브란, 바람의 홀, 서리 뿔피리]]
+    - giver: [엘리안, 린도르]
+      steps: [[대화, 토발드, 등불 대성소, null], [대화, 엘리안, 등불 대성소, null]]
+    - giver: [엘리안, 린도르]
+      steps: [[이동, null, 하얀 절벽 수도원, null], [대화, 이렌, 하얀 절벽 수도원, null]]
+    - giver: [벤토 사르, 테살 항]
+      steps: [[받기, 오스카르 브란, 바람의 홀, 서리 뿔피리], [전달, 벤토 사르, 테살 항, 서리 뿔피리]]
+    - giver: [하렌드 발크, 서리 관문]
+      steps: [[받기, 벤토 사르, 테살 항, 서리 뿔피리], [전달, 하렌드 발크, 서리 관문, 서리 뿔피리]]

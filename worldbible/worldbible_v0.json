@@ -1,0 +1,2000 @@
+{
+  "meta": {
+    "name": "에르바스 연대기",
+    "version": "v0",
+    "notes": "본실험 world bible 초안 (실험 상세 설계 1-2, 2026-09-07). 모든 고유명사, 사건, 설정은 창작이며 실존 게임 세계관의 내용을 가져오지 않았다. 현재 시점은 창건력 412년이다. 규모(엔티티 60, 관계 약 120, 제약 24)는 규모 설계 기준서(볼트 'World bible 규모 설계 기준서')의 v0 목표치이고 파일럿(단계 3)에서 보정한다. 인물 attributes.born, 사건 attributes.year 는 창건력 연도다."
+  },
+  "entities": [
+    {
+      "id": "elian",
+      "type": "character",
+      "name": "엘리안",
+      "aliases": [
+        "엘리안 왕",
+        "아르덴의 왕"
+      ],
+      "description": "아르덴 왕국의 현재 왕. 창건력 372년에 태어나 395년 아버지 마르쿠스가 죽은 뒤 왕위에 올랐다. 잿돌 전투가 벌어진 389년에는 소금 길드의 손님으로 테살 항에 머물러 전투에 참전하지 않았다. 회색 고원 연맹과의 평화를 지키는 것을 치세의 으뜸으로 삼는다.",
+      "attributes": {
+        "born": 372,
+        "신분": "왕",
+        "소속": "아르덴 왕국",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "isolde",
+      "type": "character",
+      "name": "이졸데",
+      "aliases": [
+        "이졸데 공주"
+      ],
+      "description": "엘리안 왕의 외동딸. 창건력 398년에 태어나 지금 열네 살이다. 잿돌 전투보다 아홉 해 뒤에 태어났으므로 그 전투를 직접 본 적이 없다. 궁정 마법사 미르나에게 글과 역사를 배운다.",
+      "attributes": {
+        "born": 398,
+        "신분": "공주",
+        "소속": "아르덴 왕국",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "marcus",
+      "type": "character",
+      "name": "마르쿠스",
+      "aliases": [
+        "마르쿠스 선왕",
+        "선왕"
+      ],
+      "description": "엘리안의 아버지이자 아르덴 왕국의 전 왕. 창건력 330년에 태어나 395년에 병으로 죽었다. 389년 잿돌 전투에서 아르덴 군을 직접 이끌어 잿가지 형제단을 무찔렀다. 지금은 살아 있지 않다.",
+      "attributes": {
+        "born": 330,
+        "died": 395,
+        "신분": "전 왕",
+        "소속": "아르덴 왕국"
+      }
+    },
+    {
+      "id": "harend",
+      "type": "character",
+      "name": "하렌드 발크",
+      "aliases": [
+        "하렌드",
+        "발크 단장"
+      ],
+      "description": "잿가지 기사단의 단장. 창건력 360년에 태어났다. 389년 잿돌 전투에서 선봉을 맡아 오른쪽 눈을 잃었고, 그 공으로 단장이 되었다. 지금은 별철로 벼린 새벽의 검을 지니고 있는데, 이 검은 401년에 받은 것이라 잿돌 전투 때는 갖고 있지 않았다. 달빛 나루의 대장장이 하렌과는 이름만 비슷할 뿐 아무 친족 관계가 없다.",
+      "attributes": {
+        "born": 360,
+        "신분": "기사단장",
+        "소속": "잿가지 기사단",
+        "거처": "서리 관문"
+      }
+    },
+    {
+      "id": "haren",
+      "type": "character",
+      "name": "하렌",
+      "aliases": [
+        "대장장이 하렌"
+      ],
+      "description": "달빛 나루 대장간 거리의 대장장이. 창건력 380년에 태어났다. 401년에 돌의 심장에서 들여온 별철로 새벽의 검을 벼려 하렌드 발크에게 바쳤다. 전쟁에 나간 적이 없고 기사가 아니다. 405년 대화재 때 그의 대장간은 불타지 않았다.",
+      "attributes": {
+        "born": 380,
+        "신분": "대장장이",
+        "소속": "없음",
+        "거처": "달빛 나루"
+      }
+    },
+    {
+      "id": "cedric",
+      "type": "character",
+      "name": "세드릭 몰",
+      "aliases": [
+        "세드릭",
+        "몰 재상"
+      ],
+      "description": "아르덴 왕국의 재상. 창건력 358년에 태어났다. 402년 테살 항에서 소금 길드의 벤토 사르와 소금 협약을 맺어 왕국과 길드 사이의 관세 다툼을 끝냈다. 왕의 이름으로 문서를 쓰되 군대를 지휘하지는 않는다.",
+      "attributes": {
+        "born": 358,
+        "신분": "재상",
+        "소속": "아르덴 왕국",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "mirna",
+      "type": "character",
+      "name": "미르나",
+      "aliases": [
+        "궁정 마법사 미르나"
+      ],
+      "description": "아르덴 왕국의 궁정 마법사. 창건력 340년에 태어났다. 390년에 별철로 만든 검은 우물의 인장을 써서 검은 우물을 봉인했고, 그 인장을 지금도 린도르에서 지키고 있다. 이졸데 공주의 스승이다. 테살 항의 여관 주인 미르네와는 이름만 비슷할 뿐 만난 적도 없고 사제 관계도 아니다.",
+      "attributes": {
+        "born": 340,
+        "신분": "궁정 마법사",
+        "소속": "아르덴 왕국",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "mirne",
+      "type": "character",
+      "name": "미르네",
+      "aliases": [
+        "여관 주인 미르네"
+      ],
+      "description": "테살 항 붉은 시장 안에서 여관을 하는 젊은 여인. 창건력 390년에 태어났다. 마법을 쓰지 못하고 배운 적도 없다. 선장 로자 마렌의 단골 여관이라 소금 해안 뱃사람들의 소문에 밝다. 궁정 마법사 미르나와는 아무 관계가 없다.",
+      "attributes": {
+        "born": 390,
+        "신분": "여관 주인",
+        "소속": "없음",
+        "거처": "테살 항"
+      }
+    },
+    {
+      "id": "oskar",
+      "type": "character",
+      "name": "오스카르 브란",
+      "aliases": [
+        "오스카르",
+        "고원 수호자 오스카르"
+      ],
+      "description": "회색 고원 연맹의 우두머리로 고원 수호자 칭호를 지닌다. 창건력 355년에 태어났다. 첫 서리 봉기가 일어난 356년에는 한 살 아기였으므로 봉기에 가담하지 않았다. 바람의 홀에서 연맹 회의를 주재하고, 첫 서리 조약에 따라 아르덴 왕 앞에서도 무릎을 꿇지 않는다. 카일라 브란의 아버지다.",
+      "attributes": {
+        "born": 355,
+        "신분": "연맹 수장",
+        "소속": "회색 고원 연맹",
+        "거처": "바람의 홀"
+      }
+    },
+    {
+      "id": "erna",
+      "type": "character",
+      "name": "에르나 브란",
+      "aliases": [
+        "에르나"
+      ],
+      "description": "회색 고원 연맹의 옛 수장이자 브란 가문의 시조. 창건력 301년에 아르덴 왕국과 첫 서리 조약을 맺어 고원 사람들이 아르덴 왕에게 무릎 꿇지 않을 권리를 얻어 냈다. 320년에 죽었고, 오스카르 브란의 고조모다. 지금 살아 있는 사람이 아니다.",
+      "attributes": {
+        "born": 262,
+        "died": 320,
+        "신분": "옛 수장",
+        "소속": "회색 고원 연맹"
+      }
+    },
+    {
+      "id": "kayla",
+      "type": "character",
+      "name": "카일라 브란",
+      "aliases": [
+        "카일라"
+      ],
+      "description": "오스카르 브란의 딸이자 회색 고원 연맹이 린도르에 보낸 사절. 창건력 385년에 태어나 403년부터 린도르에 산다. 아버지를 대신해 아르덴 궁정과 연맹 사이의 말을 전한다. 기사가 아니며 무기를 들지 않는다.",
+      "attributes": {
+        "born": 385,
+        "신분": "사절",
+        "소속": "회색 고원 연맹",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "tovald",
+      "type": "character",
+      "name": "토발드",
+      "aliases": [
+        "대사제 토발드",
+        "등불지기 토발드"
+      ],
+      "description": "등불 교단의 대사제로 등불지기 칭호를 지닌다. 창건력 350년에 태어났다. 371년 등불 분열로 갈렌이 쫓겨난 뒤 대사제가 되었고, 린도르의 등불 대성소에서 꺼지지 않는 등불을 지킨다. 갈렌과 다시 만난 적이 없다.",
+      "attributes": {
+        "born": 350,
+        "신분": "대사제",
+        "소속": "등불 교단",
+        "거처": "등불 대성소"
+      }
+    },
+    {
+      "id": "iren",
+      "type": "character",
+      "name": "이렌",
+      "aliases": [
+        "원장 이렌"
+      ],
+      "description": "하얀 절벽 수도원의 원장. 창건력 365년에 태어났다. 등불 교단 소속으로 새벽의 종을 지키며, 그 종은 391년 검은 역병이 끝났음을 알린 뒤로 한 번도 울리지 않았다. 토발드의 제자다.",
+      "attributes": {
+        "born": 365,
+        "신분": "수도원장",
+        "소속": "등불 교단",
+        "거처": "하얀 절벽 수도원"
+      }
+    },
+    {
+      "id": "galen",
+      "type": "character",
+      "name": "갈렌",
+      "aliases": [
+        "배교자 갈렌"
+      ],
+      "description": "등불 교단의 전 대사제. 창건력 345년에 태어났다. 371년 등불 분열 때 교단에서 쫓겨나 고요한 숲으로 들어갔고, 그 뒤 단 한 번도 린도르에 돌아오지 않았다. 지금도 살아 있으며 실피 장로 라에넬의 손님으로 숲에 산다. 무기를 들고 교단과 싸운 적은 없다.",
+      "attributes": {
+        "born": 345,
+        "신분": "추방된 전 대사제",
+        "소속": "없음",
+        "거처": "고요한 숲"
+      }
+    },
+    {
+      "id": "bento",
+      "type": "character",
+      "name": "벤토 사르",
+      "aliases": [
+        "벤토",
+        "상단주 벤토"
+      ],
+      "description": "소금 길드의 상단주. 창건력 362년에 태어났다. 소금 인장 반지로 길드의 모든 계약을 봉하며, 402년 세드릭 몰과 소금 협약을 맺었다. 389년 잿돌 전투 때 젊은 왕자 엘리안을 테살 항에 손님으로 두어 전투에서 떼어 놓았다. 소금 길드는 군대를 두지 않으므로 벤토도 병사를 거느리지 않는다.",
+      "attributes": {
+        "born": 362,
+        "신분": "상단주",
+        "소속": "소금 길드",
+        "거처": "테살 항"
+      }
+    },
+    {
+      "id": "rosa",
+      "type": "character",
+      "name": "로자 마렌",
+      "aliases": [
+        "로자",
+        "선장 로자"
+      ],
+      "description": "소금 해안의 뱃사람이자 밀수선 선장. 창건력 378년에 태어났다. 소금 길드에 속하지 않고 독자적으로 배를 부린다. 405년 달빛 나루 대화재 때 배를 잃었다가 407년에 새 배를 얻었다. 테살 항 붉은 시장의 미르네 여관에 자주 묵는다.",
+      "attributes": {
+        "born": 378,
+        "신분": "선장",
+        "소속": "없음",
+        "거처": "테살 항"
+      }
+    },
+    {
+      "id": "dargo",
+      "type": "character",
+      "name": "다르고",
+      "aliases": [
+        "가면의 다르고"
+      ],
+      "description": "잿가지 형제단을 세운 반란 지도자. 창건력 348년에 태어났다. 잿가지 기사단에서 갈라져 나와 형제단을 이끌다가 389년 잿돌 전투에서 하렌드 발크의 손에 죽었다. 그가 살아 있다는 소문은 거짓이며, 시신은 잿돌 골짜기에 묻혔다.",
+      "attributes": {
+        "born": 348,
+        "died": 389,
+        "신분": "반란 지도자",
+        "소속": "잿가지 형제단"
+      }
+    },
+    {
+      "id": "veil",
+      "type": "character",
+      "name": "베일",
+      "aliases": [],
+      "description": "다르고의 부관이었던 잿가지 형제단의 마지막 우두머리. 창건력 366년에 태어났다. 잿돌 전투에서 살아남아 잿돌 요새의 폐허에 숨어 지내며 다르고의 가면을 지니고 있다. 다르고와 형제가 아니며 혈연이 없다.",
+      "attributes": {
+        "born": 366,
+        "신분": "반란 잔당 우두머리",
+        "소속": "잿가지 형제단",
+        "거처": "잿돌 요새"
+      }
+    },
+    {
+      "id": "tungar",
+      "type": "character",
+      "name": "툰가르",
+      "aliases": [
+        "장로 툰가르"
+      ],
+      "description": "드바르의 장로이자 돌의 심장을 다스리는 이. 창건력 322년에 태어나 지금 아흔 살이다. 340년에 돌의 심장 깊은 갱도에서 별철을 처음 찾아냈다. 드바르의 법에 따라 바다에 나간 적이 없고, 외부인을 돌의 심장 안으로 들이지 않는다.",
+      "attributes": {
+        "born": 322,
+        "신분": "장로",
+        "소속": "드바르",
+        "거처": "돌의 심장"
+      }
+    },
+    {
+      "id": "laenel",
+      "type": "character",
+      "name": "라에넬",
+      "aliases": [
+        "장로 라에넬"
+      ],
+      "description": "고요한 숲에 사는 실피의 장로. 나이를 밝히지 않으며 창건력 이전부터 살았다고 전해진다. 고요한 숲 밖으로 나간 적이 없고, 371년부터 배교자 갈렌을 손님으로 받아들여 함께 산다. 실피의 법에 따라 마법을 쓰지 않는다.",
+      "attributes": {
+        "신분": "장로",
+        "소속": "실피",
+        "거처": "고요한 숲"
+      }
+    },
+    {
+      "id": "mab",
+      "type": "character",
+      "name": "마브",
+      "aliases": [
+        "노파 마브"
+      ],
+      "description": "이스카 함락에서 살아남은 몇 안 되는 사람 가운데 하나. 창건력 330년에 태어나 388년 검은 역병이 이스카를 덮쳤을 때 도시를 빠져나왔다. 지금은 달빛 나루에서 약초를 팔며 산다. 그 뒤로 이스카에 돌아간 적이 없다.",
+      "attributes": {
+        "born": 330,
+        "신분": "약초상",
+        "소속": "없음",
+        "거처": "달빛 나루"
+      }
+    },
+    {
+      "id": "oren",
+      "type": "character",
+      "name": "오렌 케이",
+      "aliases": [
+        "오렌",
+        "학자 오렌"
+      ],
+      "description": "에르바스 대륙의 역사를 기록하는 떠돌이 학자. 창건력 370년에 태어났다. 이스카의 지도를 지닌 유일한 사람으로, 이스카 폐허를 여러 번 드나들었다. 돌의 심장에는 들어가 본 적이 없다. 드바르가 외부인을 들이지 않기 때문이다.",
+      "attributes": {
+        "born": 370,
+        "신분": "학자",
+        "소속": "없음",
+        "거처": "떠돌이"
+      }
+    },
+    {
+      "id": "pip",
+      "type": "character",
+      "name": "핍",
+      "aliases": [
+        "심부름꾼 핍"
+      ],
+      "description": "린도르의 고아 소년으로 궁정과 시장 사이를 오가는 심부름꾼. 창건력 401년에 태어나 지금 열한 살이다. 린도르 성벽 밖으로 나가 본 적이 없어 바다도 고원도 본 적이 없다. 카일라 브란의 편지를 자주 나른다.",
+      "attributes": {
+        "born": 401,
+        "신분": "심부름꾼",
+        "소속": "없음",
+        "거처": "린도르"
+      }
+    },
+    {
+      "id": "lindor",
+      "type": "place",
+      "name": "린도르",
+      "aliases": [
+        "아르덴의 수도"
+      ],
+      "description": "아르덴 왕국의 수도로 강의 땅 한가운데 강가에 선 성곽 도시. 왕궁과 등불 대성소가 있고, 회색 고원 연맹의 사절 카일라 브란이 산다. 바다에서 멀어 항구가 없다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "아르덴 왕국"
+      }
+    },
+    {
+      "id": "moonlight_ferry",
+      "type": "place",
+      "name": "달빛 나루",
+      "aliases": [],
+      "description": "린도르 남쪽 강 하류의 나루터 마을. 대장간 거리로 이름나 있고 대장장이 하렌과 약초상 마브가 산다. 창건력 405년 대화재로 선착장이 불탔다가 407년에 다시 지어졌다. 바닷가가 아니라 강가다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "아르덴 왕국"
+      }
+    },
+    {
+      "id": "ashstone_valley",
+      "type": "place",
+      "name": "잿돌 골짜기",
+      "aliases": [],
+      "description": "강의 땅 북쪽 산기슭의 좁은 골짜기. 창건력 389년 잿돌 전투가 벌어진 곳이며 다르고가 이곳에 묻혔다. 골짜기 입구에 잿돌 요새의 폐허가 있다. 요새와 골짜기는 다른 곳이다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "아르덴 왕국"
+      }
+    },
+    {
+      "id": "ashstone_fort",
+      "type": "place",
+      "name": "잿돌 요새",
+      "aliases": [],
+      "description": "잿돌 골짜기 입구에 선 무너진 요새. 잿돌 전투 때 잿가지 형제단의 본거지였고 전투 뒤 버려졌다. 지금은 베일이 잔당과 함께 숨어 있다. 아르덴 왕국은 이 요새를 다시 짓지 않았다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "잿가지 형제단"
+      }
+    },
+    {
+      "id": "hall_of_winds",
+      "type": "place",
+      "name": "바람의 홀",
+      "aliases": [],
+      "description": "회색 고원 한복판의 돌로 지은 회의장. 회색 고원 연맹의 씨족 회의가 열리고 오스카르 브란이 산다. 첫 서리 조약문의 원본이 이곳에 보관되어 있다.",
+      "attributes": {
+        "지역": "회색 고원",
+        "소속": "회색 고원 연맹"
+      }
+    },
+    {
+      "id": "tessal",
+      "type": "place",
+      "name": "테살 항",
+      "aliases": [
+        "테살"
+      ],
+      "description": "소금 해안에서 가장 큰 항구 도시이자 소금 길드의 본거지. 붉은 시장이 있고 벤토 사르와 미르네, 로자 마렌이 산다. 아르덴 왕국의 땅이 아니라 소금 길드가 다스린다.",
+      "attributes": {
+        "지역": "소금 해안",
+        "소속": "소금 길드"
+      }
+    },
+    {
+      "id": "red_market",
+      "type": "place",
+      "name": "붉은 시장",
+      "aliases": [],
+      "description": "테살 항 안쪽의 큰 장터. 붉은 천막 때문에 이 이름이 붙었다. 미르네의 여관이 이 안에 있고, 소금 해안의 소문이 모이는 곳이다.",
+      "attributes": {
+        "지역": "소금 해안",
+        "소속": "소금 길드"
+      }
+    },
+    {
+      "id": "lantern_sanctum",
+      "type": "place",
+      "name": "등불 대성소",
+      "aliases": [],
+      "description": "린도르 안에 있는 등불 교단의 본산. 꺼지지 않는 등불이 모셔져 있고 대사제 토발드가 지킨다. 371년 등불 분열이 이곳에서 일어났다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "등불 교단"
+      }
+    },
+    {
+      "id": "silent_forest",
+      "type": "place",
+      "name": "고요한 숲",
+      "aliases": [],
+      "description": "강의 땅 동쪽 끝의 깊은 숲으로 실피가 산다. 장로 라에넬이 다스리고 배교자 갈렌이 371년부터 숨어 산다. 아르덴 왕국의 법이 미치지 않는다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "실피"
+      }
+    },
+    {
+      "id": "black_well",
+      "type": "place",
+      "name": "검은 우물",
+      "aliases": [],
+      "description": "이스카 북쪽 황무지에 있는 오래된 우물. 검은 역병이 이곳에서 퍼졌다고 전해진다. 창건력 390년에 미르나가 검은 우물의 인장으로 봉인한 뒤 지금까지 열린 적이 없다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "없음"
+      }
+    },
+    {
+      "id": "frost_gate",
+      "type": "place",
+      "name": "서리 관문",
+      "aliases": [],
+      "description": "강의 땅과 회색 고원을 잇는 유일한 고갯길의 관문. 잿가지 기사단이 지키고 하렌드 발크가 머문다. 356년 첫 서리 봉기 뒤로 통행세를 받지 않는다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "잿가지 기사단"
+      }
+    },
+    {
+      "id": "white_cliff_abbey",
+      "type": "place",
+      "name": "하얀 절벽 수도원",
+      "aliases": [],
+      "description": "소금 해안 서쪽 절벽 위에 선 등불 교단의 수도원. 원장 이렌이 있고 새벽의 종이 걸려 있다. 테살 항에서 배로 하루 거리다.",
+      "attributes": {
+        "지역": "소금 해안",
+        "소속": "등불 교단"
+      }
+    },
+    {
+      "id": "iska",
+      "type": "place",
+      "name": "이스카",
+      "aliases": [
+        "몰락한 이스카"
+      ],
+      "description": "강의 땅 서쪽에 있던 큰 도시. 창건력 388년 검은 역병으로 무너져 버려졌고 그 뒤 다시 짓지 않아 지금도 폐허다. 아무도 살지 않으며 학자 오렌 케이만 지도를 들고 드나든다.",
+      "attributes": {
+        "지역": "강의 땅",
+        "소속": "없음",
+        "상태": "폐허"
+      }
+    },
+    {
+      "id": "stone_heart",
+      "type": "place",
+      "name": "돌의 심장",
+      "aliases": [],
+      "description": "회색 고원 아래 땅속에 파인 드바르의 도시. 장로 툰가르가 다스리고 별철이 나는 유일한 곳이다. 드바르는 외부인을 이 도시 안으로 들이지 않는다.",
+      "attributes": {
+        "지역": "회색 고원",
+        "소속": "드바르"
+      }
+    },
+    {
+      "id": "arden",
+      "type": "faction",
+      "name": "아르덴 왕국",
+      "aliases": [
+        "아르덴"
+      ],
+      "description": "강의 땅을 다스리는 왕국. 엘리안 왕이 다스리고 수도는 린도르다. 잿가지 기사단이 왕국의 칼이고 등불 교단이 왕국의 신앙이다. 회색 고원 연맹과는 첫 서리 조약 뒤로 전쟁을 하지 않았다.",
+      "attributes": {
+        "수장": "엘리안",
+        "본거지": "린도르"
+      }
+    },
+    {
+      "id": "highland_league",
+      "type": "faction",
+      "name": "회색 고원 연맹",
+      "aliases": [
+        "고원 연맹"
+      ],
+      "description": "회색 고원의 씨족들이 맺은 연맹. 고원 수호자 오스카르 브란이 이끌고 바람의 홀에서 회의한다. 아르덴 왕국의 신하가 아니며 첫 서리 조약으로 대등한 사이로 인정받았다.",
+      "attributes": {
+        "수장": "오스카르 브란",
+        "본거지": "바람의 홀"
+      }
+    },
+    {
+      "id": "salt_guild",
+      "type": "faction",
+      "name": "소금 길드",
+      "aliases": [
+        "소금 상단"
+      ],
+      "description": "소금 해안의 항구와 뱃길을 쥔 상인 연합. 상단주 벤토 사르가 이끌고 테살 항이 본거지다. 군대를 두지 않고 돈과 계약으로 움직인다. 402년 소금 협약으로 아르덴 왕국과 관세를 정했다.",
+      "attributes": {
+        "수장": "벤토 사르",
+        "본거지": "테살 항"
+      }
+    },
+    {
+      "id": "lantern_church",
+      "type": "faction",
+      "name": "등불 교단",
+      "aliases": [],
+      "description": "꺼지지 않는 등불을 섬기는 에르바스의 큰 교단. 대사제 토발드가 이끌고 린도르의 등불 대성소가 본산이다. 371년 등불 분열로 갈렌 일파가 떨어져 나갔다. 교단은 신이 세상에 직접 나타난 적이 없다고 가르친다.",
+      "attributes": {
+        "수장": "토발드",
+        "본거지": "등불 대성소"
+      }
+    },
+    {
+      "id": "ashbranch_knights",
+      "type": "faction",
+      "name": "잿가지 기사단",
+      "aliases": [],
+      "description": "아르덴 왕에게 충성을 맹세한 기사단. 하렌드 발크가 이끌고 서리 관문을 지킨다. 잿가지 형제단은 이 기사단에서 갈라져 나간 반란 세력이라 이름이 비슷하지만 서로 적이다.",
+      "attributes": {
+        "수장": "하렌드 발크",
+        "본거지": "서리 관문"
+      }
+    },
+    {
+      "id": "ashbranch_brotherhood",
+      "type": "faction",
+      "name": "잿가지 형제단",
+      "aliases": [
+        "형제단"
+      ],
+      "description": "다르고가 잿가지 기사단을 떠나 세운 반란 세력. 389년 잿돌 전투에서 무너졌고 다르고는 죽었다. 남은 무리는 베일을 따라 잿돌 요새 폐허에 숨어 있다. 왕국은 이들을 사면하지 않았다.",
+      "attributes": {
+        "수장": "베일",
+        "본거지": "잿돌 요새"
+      }
+    },
+    {
+      "id": "first_frost_treaty",
+      "type": "event",
+      "name": "첫 서리 조약",
+      "aliases": [],
+      "description": "창건력 301년 에르나 브란이 아르덴 왕국과 맺은 조약. 회색 고원 연맹을 대등한 상대로 인정하고, 고원 사람은 아르덴 왕 앞에서 무릎을 꿇지 않는다고 정했다. 조약문 원본은 바람의 홀에 있다. 첫 서리 봉기와는 다른 사건이다.",
+      "attributes": {
+        "year": 301
+      }
+    },
+    {
+      "id": "starsteel_discovery",
+      "type": "event",
+      "name": "별철 발견",
+      "aliases": [],
+      "description": "창건력 340년 툰가르가 돌의 심장 깊은 갱도에서 별철을 처음 캐낸 일. 이때부터 드바르는 별철을 아주 드물게만 바깥에 내놓는다.",
+      "attributes": {
+        "year": 340
+      }
+    },
+    {
+      "id": "first_frost_uprising",
+      "type": "event",
+      "name": "첫 서리 봉기",
+      "aliases": [],
+      "description": "창건력 356년 회색 고원 씨족들이 서리 관문의 통행세에 맞서 일으킨 봉기. 아르덴 왕국이 통행세를 없애며 끝났고 전쟁으로 번지지 않았다. 첫 서리 조약보다 55년 뒤의 일이며, 오스카르 브란은 이때 한 살이라 가담하지 않았다.",
+      "attributes": {
+        "year": 356
+      }
+    },
+    {
+      "id": "lantern_schism",
+      "type": "event",
+      "name": "등불 분열",
+      "aliases": [],
+      "description": "창건력 371년 등불 대성소에서 대사제 갈렌이 교리 다툼 끝에 쫓겨난 일. 토발드가 새 대사제가 되었고 갈렌은 고요한 숲으로 떠났다. 피를 흘린 싸움은 없었다.",
+      "attributes": {
+        "year": 371
+      }
+    },
+    {
+      "id": "fall_of_iska",
+      "type": "event",
+      "name": "이스카 함락",
+      "aliases": [],
+      "description": "창건력 388년 검은 역병이 이스카를 덮쳐 도시가 버려진 일. 군대의 공격이 아니라 역병 때문이었다. 마브가 살아남은 사람 가운데 하나다. 잿돌 전투보다 한 해 앞선다.",
+      "attributes": {
+        "year": 388
+      }
+    },
+    {
+      "id": "ashstone_battle",
+      "type": "event",
+      "name": "잿돌 전투",
+      "aliases": [],
+      "description": "창건력 389년 잿돌 골짜기에서 마르쿠스 선왕의 아르덴 군이 다르고의 잿가지 형제단을 무찌른 전투. 하렌드 발크가 선봉에서 다르고를 죽이고 오른쪽 눈을 잃었다. 왕자 엘리안은 테살 항에 있어 참전하지 않았다.",
+      "attributes": {
+        "year": 389
+      }
+    },
+    {
+      "id": "well_sealing",
+      "type": "event",
+      "name": "검은 우물 봉인",
+      "aliases": [],
+      "description": "창건력 390년 미르나가 별철로 만든 검은 우물의 인장으로 검은 우물을 봉인한 일. 그 뒤 검은 역병이 잦아들었고 391년 새벽의 종이 역병의 끝을 알렸다. 잿돌 전투 다음 해의 일이다.",
+      "attributes": {
+        "year": 390
+      }
+    },
+    {
+      "id": "elian_coronation",
+      "type": "event",
+      "name": "엘리안 대관식",
+      "aliases": [],
+      "description": "창건력 395년 마르쿠스 선왕이 병으로 죽은 뒤 엘리안이 린도르에서 왕관을 쓴 일. 오스카르 브란이 참석했으나 조약에 따라 무릎을 꿇지 않았다.",
+      "attributes": {
+        "year": 395
+      }
+    },
+    {
+      "id": "salt_accord",
+      "type": "event",
+      "name": "소금 협약",
+      "aliases": [],
+      "description": "창건력 402년 테살 항에서 세드릭 몰과 벤토 사르가 맺은 협약. 아르덴 왕국과 소금 길드 사이의 관세를 정하고 길드가 군대를 두지 않는다는 약속을 다시 적었다. 벤토 사르가 소금 인장 반지로 봉했다.",
+      "attributes": {
+        "year": 402
+      }
+    },
+    {
+      "id": "ferry_fire",
+      "type": "event",
+      "name": "달빛 나루 대화재",
+      "aliases": [],
+      "description": "창건력 405년 달빛 나루 선착장이 불탄 일. 로자 마렌의 배가 이때 타 버렸고, 하렌의 대장간은 불길을 피했다. 선착장은 407년에 다시 지어졌다.",
+      "attributes": {
+        "year": 405
+      }
+    },
+    {
+      "id": "dawn_sword",
+      "type": "object",
+      "name": "새벽의 검",
+      "aliases": [],
+      "description": "창건력 401년 대장장이 하렌이 별철로 벼린 검. 하렌드 발크가 지니고 있으며 부러지거나 사라진 적이 없다. 잿돌 전투보다 12년 뒤에 만들어졌으므로 그 전투에서 쓰이지 않았다. 하얀 절벽 수도원의 새벽의 종과는 이름만 닮았을 뿐 아무 관계가 없다.",
+      "attributes": {
+        "재료": "별철",
+        "소유자": "하렌드 발크"
+      }
+    },
+    {
+      "id": "dawn_bell",
+      "type": "object",
+      "name": "새벽의 종",
+      "aliases": [],
+      "description": "하얀 절벽 수도원에 걸린 큰 종. 창건력 391년 검은 역병의 끝을 알리며 울린 뒤 지금까지 한 번도 울리지 않았다. 원장 이렌이 지킨다. 새벽의 검과는 관계가 없다.",
+      "attributes": {
+        "소유자": "등불 교단",
+        "보관처": "하얀 절벽 수도원"
+      }
+    },
+    {
+      "id": "well_seal",
+      "type": "object",
+      "name": "검은 우물의 인장",
+      "aliases": [],
+      "description": "별철로 만든 손바닥만 한 인장. 창건력 390년 미르나가 이것으로 검은 우물을 봉인했고, 봉인을 지키기 위해 지금은 미르나가 린도르에서 보관한다. 부서지지 않았다.",
+      "attributes": {
+        "재료": "별철",
+        "소유자": "미르나"
+      }
+    },
+    {
+      "id": "treaty_scroll",
+      "type": "object",
+      "name": "첫 서리 조약문",
+      "aliases": [],
+      "description": "창건력 301년 첫 서리 조약의 원본 문서. 에르나 브란의 서명이 있고 바람의 홀에 보관되어 있다. 린도르에는 사본만 있다.",
+      "attributes": {
+        "보관처": "바람의 홀"
+      }
+    },
+    {
+      "id": "eternal_lantern",
+      "type": "object",
+      "name": "꺼지지 않는 등불",
+      "aliases": [],
+      "description": "등불 교단이 섬기는 성물로 등불 대성소 안에 모셔져 있다. 창건력 이전부터 한 번도 꺼진 적이 없다고 전해진다. 대사제 토발드가 지키며 대성소 밖으로 옮긴 적이 없다.",
+      "attributes": {
+        "소유자": "등불 교단",
+        "보관처": "등불 대성소"
+      }
+    },
+    {
+      "id": "salt_ring",
+      "type": "object",
+      "name": "소금 인장 반지",
+      "aliases": [],
+      "description": "소금 길드 상단주가 끼는 반지. 길드의 계약은 이 반지로 봉해야 효력이 있다. 지금은 벤토 사르가 끼고 있으며 402년 소금 협약을 이 반지로 봉했다.",
+      "attributes": {
+        "소유자": "벤토 사르"
+      }
+    },
+    {
+      "id": "iska_map",
+      "type": "object",
+      "name": "이스카의 지도",
+      "aliases": [],
+      "description": "몰락 전 이스카의 거리와 지하 수로를 그린 유일한 완전한 지도. 학자 오렌 케이가 지니고 있다. 검은 우물의 위치도 적혀 있다.",
+      "attributes": {
+        "소유자": "오렌 케이"
+      }
+    },
+    {
+      "id": "dargo_mask",
+      "type": "object",
+      "name": "다르고의 가면",
+      "aliases": [],
+      "description": "다르고가 잿돌 전투 때까지 쓰던 검은 쇠 가면. 다르고가 죽은 뒤 베일이 거두어 잿돌 요새에 지니고 있다. 별철로 만든 것이 아니다.",
+      "attributes": {
+        "소유자": "베일",
+        "보관처": "잿돌 요새"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "subject": "elian",
+      "predicate": "다스린다",
+      "object": "arden",
+      "description": "엘리안은 아르덴 왕국을 다스리는 왕이다"
+    },
+    {
+      "subject": "elian",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "엘리안 왕은 린도르의 왕궁에 산다"
+    },
+    {
+      "subject": "elian",
+      "predicate": "자식이다",
+      "object": "marcus",
+      "description": "엘리안은 마르쿠스 선왕의 아들이다"
+    },
+    {
+      "subject": "elian",
+      "predicate": "참전하지 않았다",
+      "object": "ashstone_battle",
+      "description": "엘리안은 잿돌 전투에 참전하지 않았다"
+    },
+    {
+      "subject": "elian",
+      "predicate": "머물렀다",
+      "object": "tessal",
+      "description": "엘리안은 잿돌 전투가 벌어진 389년에 테살 항에 손님으로 머물렀다"
+    },
+    {
+      "subject": "isolde",
+      "predicate": "자식이다",
+      "object": "elian",
+      "description": "이졸데는 엘리안 왕의 외동딸이다"
+    },
+    {
+      "subject": "isolde",
+      "predicate": "제자이다",
+      "object": "mirna",
+      "description": "이졸데 공주는 미르나에게 글과 역사를 배우는 제자다"
+    },
+    {
+      "subject": "isolde",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "이졸데 공주는 린도르의 왕궁에 산다"
+    },
+    {
+      "subject": "marcus",
+      "predicate": "이끌었다",
+      "object": "ashstone_battle",
+      "description": "마르쿠스 선왕은 잿돌 전투에서 아르덴 군을 이끌었다"
+    },
+    {
+      "subject": "marcus",
+      "predicate": "다스렸다",
+      "object": "arden",
+      "description": "마르쿠스는 395년에 죽기 전까지 아르덴 왕국의 왕이었다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "이끈다",
+      "object": "ashbranch_knights",
+      "description": "하렌드 발크는 잿가지 기사단의 단장이다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "참전했다",
+      "object": "ashstone_battle",
+      "description": "하렌드 발크는 잿돌 전투에서 선봉을 맡아 싸웠고 오른쪽 눈을 잃었다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "죽였다",
+      "object": "dargo",
+      "description": "하렌드 발크는 잿돌 전투에서 다르고를 죽였다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "소유한다",
+      "object": "dawn_sword",
+      "description": "하렌드 발크는 401년부터 새벽의 검을 지니고 있다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "거주한다",
+      "object": "frost_gate",
+      "description": "하렌드 발크는 서리 관문에 머문다"
+    },
+    {
+      "subject": "harend",
+      "predicate": "충성한다",
+      "object": "elian",
+      "description": "하렌드 발크는 엘리안 왕에게 충성을 맹세했다"
+    },
+    {
+      "subject": "haren",
+      "predicate": "만들었다",
+      "object": "dawn_sword",
+      "description": "하렌은 401년에 별철로 새벽의 검을 벼렸다"
+    },
+    {
+      "subject": "haren",
+      "predicate": "거주한다",
+      "object": "moonlight_ferry",
+      "description": "하렌은 달빛 나루 대장간 거리에 산다"
+    },
+    {
+      "subject": "haren",
+      "predicate": "친족이 아니다",
+      "object": "harend",
+      "description": "하렌과 하렌드 발크는 이름만 비슷할 뿐 친족이 아니다"
+    },
+    {
+      "subject": "cedric",
+      "predicate": "섬긴다",
+      "object": "elian",
+      "description": "세드릭 몰은 엘리안 왕의 재상이다"
+    },
+    {
+      "subject": "cedric",
+      "predicate": "맺었다",
+      "object": "salt_accord",
+      "description": "세드릭 몰은 402년 아르덴 왕국을 대표해 소금 협약을 맺었다"
+    },
+    {
+      "subject": "cedric",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "세드릭 몰은 린도르에 산다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "섬긴다",
+      "object": "arden",
+      "description": "미르나는 아르덴 왕국의 궁정 마법사다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "봉인했다",
+      "object": "black_well",
+      "description": "미르나는 390년에 검은 우물을 봉인했다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "소유한다",
+      "object": "well_seal",
+      "description": "미르나는 검은 우물의 인장을 린도르에서 보관하고 있다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "스승이다",
+      "object": "isolde",
+      "description": "미르나는 이졸데 공주의 스승이다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "미르나는 린도르에 산다"
+    },
+    {
+      "subject": "mirna",
+      "predicate": "관계가 없다",
+      "object": "mirne",
+      "description": "미르나와 미르네는 서로 만난 적이 없고 사제 관계도 아니다"
+    },
+    {
+      "subject": "mirne",
+      "predicate": "일한다",
+      "object": "red_market",
+      "description": "미르네는 붉은 시장 안에서 여관을 한다"
+    },
+    {
+      "subject": "mirne",
+      "predicate": "거주한다",
+      "object": "tessal",
+      "description": "미르네는 테살 항에 산다"
+    },
+    {
+      "subject": "mirne",
+      "predicate": "단골로 둔다",
+      "object": "rosa",
+      "description": "로자 마렌은 미르네의 여관에 자주 묵는 단골이다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "이끈다",
+      "object": "highland_league",
+      "description": "오스카르 브란은 회색 고원 연맹의 우두머리다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "거주한다",
+      "object": "hall_of_winds",
+      "description": "오스카르 브란은 바람의 홀에 산다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "부모이다",
+      "object": "kayla",
+      "description": "오스카르 브란은 카일라 브란의 아버지다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "후손이다",
+      "object": "erna",
+      "description": "오스카르 브란은 에르나 브란의 고손자다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "참석했다",
+      "object": "elian_coronation",
+      "description": "오스카르 브란은 엘리안 대관식에 참석했으나 무릎을 꿇지 않았다"
+    },
+    {
+      "subject": "oskar",
+      "predicate": "가담하지 않았다",
+      "object": "first_frost_uprising",
+      "description": "오스카르 브란은 첫 서리 봉기 때 한 살이라 가담하지 않았다"
+    },
+    {
+      "subject": "erna",
+      "predicate": "맺었다",
+      "object": "first_frost_treaty",
+      "description": "에르나 브란은 301년에 첫 서리 조약을 맺었다"
+    },
+    {
+      "subject": "erna",
+      "predicate": "이끌었다",
+      "object": "highland_league",
+      "description": "에르나 브란은 옛날에 회색 고원 연맹을 이끌었다"
+    },
+    {
+      "subject": "kayla",
+      "predicate": "대표한다",
+      "object": "highland_league",
+      "description": "카일라 브란은 회색 고원 연맹의 사절이다"
+    },
+    {
+      "subject": "kayla",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "카일라 브란은 403년부터 린도르에 산다"
+    },
+    {
+      "subject": "kayla",
+      "predicate": "편지를 맡긴다",
+      "object": "pip",
+      "description": "카일라 브란은 심부름꾼 핍에게 편지를 자주 맡긴다"
+    },
+    {
+      "subject": "tovald",
+      "predicate": "이끈다",
+      "object": "lantern_church",
+      "description": "토발드는 등불 교단의 대사제다"
+    },
+    {
+      "subject": "tovald",
+      "predicate": "지킨다",
+      "object": "eternal_lantern",
+      "description": "토발드는 꺼지지 않는 등불을 지킨다"
+    },
+    {
+      "subject": "tovald",
+      "predicate": "거주한다",
+      "object": "lantern_sanctum",
+      "description": "토발드는 등불 대성소에 산다"
+    },
+    {
+      "subject": "tovald",
+      "predicate": "스승이다",
+      "object": "iren",
+      "description": "토발드는 이렌의 스승이다"
+    },
+    {
+      "subject": "tovald",
+      "predicate": "만나지 않았다",
+      "object": "galen",
+      "description": "토발드는 등불 분열 뒤로 갈렌을 만난 적이 없다"
+    },
+    {
+      "subject": "iren",
+      "predicate": "다스린다",
+      "object": "white_cliff_abbey",
+      "description": "이렌은 하얀 절벽 수도원의 원장이다"
+    },
+    {
+      "subject": "iren",
+      "predicate": "지킨다",
+      "object": "dawn_bell",
+      "description": "이렌은 새벽의 종을 지킨다"
+    },
+    {
+      "subject": "iren",
+      "predicate": "속한다",
+      "object": "lantern_church",
+      "description": "이렌은 등불 교단 소속이다"
+    },
+    {
+      "subject": "galen",
+      "predicate": "일으켰다",
+      "object": "lantern_schism",
+      "description": "갈렌은 371년 등불 분열의 당사자로 교단에서 쫓겨났다"
+    },
+    {
+      "subject": "galen",
+      "predicate": "거주한다",
+      "object": "silent_forest",
+      "description": "갈렌은 371년부터 고요한 숲에 산다"
+    },
+    {
+      "subject": "galen",
+      "predicate": "손님이다",
+      "object": "laenel",
+      "description": "갈렌은 라에넬의 손님으로 고요한 숲에 머문다"
+    },
+    {
+      "subject": "galen",
+      "predicate": "돌아가지 않았다",
+      "object": "lindor",
+      "description": "갈렌은 등불 분열 뒤 린도르에 한 번도 돌아가지 않았다"
+    },
+    {
+      "subject": "bento",
+      "predicate": "이끈다",
+      "object": "salt_guild",
+      "description": "벤토 사르는 소금 길드의 상단주다"
+    },
+    {
+      "subject": "bento",
+      "predicate": "소유한다",
+      "object": "salt_ring",
+      "description": "벤토 사르는 소금 인장 반지를 끼고 있다"
+    },
+    {
+      "subject": "bento",
+      "predicate": "맺었다",
+      "object": "salt_accord",
+      "description": "벤토 사르는 402년 소금 길드를 대표해 소금 협약을 맺었다"
+    },
+    {
+      "subject": "bento",
+      "predicate": "거주한다",
+      "object": "tessal",
+      "description": "벤토 사르는 테살 항에 산다"
+    },
+    {
+      "subject": "bento",
+      "predicate": "보호했다",
+      "object": "elian",
+      "description": "벤토 사르는 389년 왕자 엘리안을 테살 항에 손님으로 두어 잿돌 전투에서 떼어 놓았다"
+    },
+    {
+      "subject": "rosa",
+      "predicate": "거주한다",
+      "object": "tessal",
+      "description": "로자 마렌은 테살 항에 산다"
+    },
+    {
+      "subject": "rosa",
+      "predicate": "속하지 않는다",
+      "object": "salt_guild",
+      "description": "로자 마렌은 소금 길드에 속하지 않고 혼자 배를 부린다"
+    },
+    {
+      "subject": "rosa",
+      "predicate": "피해를 입었다",
+      "object": "ferry_fire",
+      "description": "로자 마렌은 405년 달빛 나루 대화재로 배를 잃었다"
+    },
+    {
+      "subject": "dargo",
+      "predicate": "세웠다",
+      "object": "ashbranch_brotherhood",
+      "description": "다르고는 잿가지 형제단을 세웠다"
+    },
+    {
+      "subject": "dargo",
+      "predicate": "죽었다",
+      "object": "ashstone_battle",
+      "description": "다르고는 389년 잿돌 전투에서 죽었다"
+    },
+    {
+      "subject": "dargo",
+      "predicate": "묻혔다",
+      "object": "ashstone_valley",
+      "description": "다르고의 시신은 잿돌 골짜기에 묻혔다"
+    },
+    {
+      "subject": "dargo",
+      "predicate": "떠났다",
+      "object": "ashbranch_knights",
+      "description": "다르고는 잿가지 기사단을 떠나 형제단을 세웠다"
+    },
+    {
+      "subject": "veil",
+      "predicate": "이끈다",
+      "object": "ashbranch_brotherhood",
+      "description": "베일은 지금 잿가지 형제단의 남은 무리를 이끈다"
+    },
+    {
+      "subject": "veil",
+      "predicate": "거주한다",
+      "object": "ashstone_fort",
+      "description": "베일은 잿돌 요새 폐허에 숨어 산다"
+    },
+    {
+      "subject": "veil",
+      "predicate": "소유한다",
+      "object": "dargo_mask",
+      "description": "베일은 다르고의 가면을 지니고 있다"
+    },
+    {
+      "subject": "veil",
+      "predicate": "부관이었다",
+      "object": "dargo",
+      "description": "베일은 다르고의 부관이었으나 다르고와 혈연은 없다"
+    },
+    {
+      "subject": "veil",
+      "predicate": "살아남았다",
+      "object": "ashstone_battle",
+      "description": "베일은 잿돌 전투에서 살아남았다"
+    },
+    {
+      "subject": "tungar",
+      "predicate": "다스린다",
+      "object": "stone_heart",
+      "description": "툰가르는 돌의 심장을 다스리는 드바르의 장로다"
+    },
+    {
+      "subject": "tungar",
+      "predicate": "발견했다",
+      "object": "starsteel_discovery",
+      "description": "툰가르는 340년 별철 발견의 주인공이다"
+    },
+    {
+      "subject": "tungar",
+      "predicate": "거주한다",
+      "object": "stone_heart",
+      "description": "툰가르는 돌의 심장에 산다"
+    },
+    {
+      "subject": "laenel",
+      "predicate": "다스린다",
+      "object": "silent_forest",
+      "description": "라에넬은 고요한 숲을 다스리는 실피의 장로다"
+    },
+    {
+      "subject": "laenel",
+      "predicate": "거주한다",
+      "object": "silent_forest",
+      "description": "라에넬은 고요한 숲에 살며 숲 밖으로 나간 적이 없다"
+    },
+    {
+      "subject": "laenel",
+      "predicate": "손님으로 받았다",
+      "object": "galen",
+      "description": "라에넬은 371년부터 갈렌을 손님으로 받아들였다"
+    },
+    {
+      "subject": "mab",
+      "predicate": "살아남았다",
+      "object": "fall_of_iska",
+      "description": "마브는 388년 이스카 함락에서 살아남았다"
+    },
+    {
+      "subject": "mab",
+      "predicate": "거주한다",
+      "object": "moonlight_ferry",
+      "description": "마브는 달빛 나루에서 약초를 팔며 산다"
+    },
+    {
+      "subject": "mab",
+      "predicate": "돌아가지 않았다",
+      "object": "iska",
+      "description": "마브는 이스카를 빠져나온 뒤 한 번도 돌아가지 않았다"
+    },
+    {
+      "subject": "oren",
+      "predicate": "소유한다",
+      "object": "iska_map",
+      "description": "오렌 케이는 이스카의 지도를 지니고 있다"
+    },
+    {
+      "subject": "oren",
+      "predicate": "드나든다",
+      "object": "iska",
+      "description": "오렌 케이는 이스카 폐허를 여러 번 드나들었다"
+    },
+    {
+      "subject": "oren",
+      "predicate": "들어간 적이 없다",
+      "object": "stone_heart",
+      "description": "오렌 케이는 돌의 심장에 들어가 본 적이 없다"
+    },
+    {
+      "subject": "pip",
+      "predicate": "거주한다",
+      "object": "lindor",
+      "description": "핍은 린도르에 살며 성벽 밖으로 나가 본 적이 없다"
+    },
+    {
+      "subject": "pip",
+      "predicate": "편지를 나른다",
+      "object": "kayla",
+      "description": "핍은 카일라 브란의 편지를 나른다"
+    },
+    {
+      "subject": "lindor",
+      "predicate": "속한다",
+      "object": "arden",
+      "description": "린도르는 아르덴 왕국의 수도다"
+    },
+    {
+      "subject": "moonlight_ferry",
+      "predicate": "속한다",
+      "object": "arden",
+      "description": "달빛 나루는 아르덴 왕국의 마을이다"
+    },
+    {
+      "subject": "moonlight_ferry",
+      "predicate": "남쪽에 있다",
+      "object": "lindor",
+      "description": "달빛 나루는 린도르 남쪽 강 하류에 있다"
+    },
+    {
+      "subject": "ashstone_fort",
+      "predicate": "입구에 있다",
+      "object": "ashstone_valley",
+      "description": "잿돌 요새는 잿돌 골짜기 입구에 있다"
+    },
+    {
+      "subject": "ashstone_fort",
+      "predicate": "본거지이다",
+      "object": "ashbranch_brotherhood",
+      "description": "잿돌 요새는 잿가지 형제단의 본거지였고 지금은 잔당의 은신처다"
+    },
+    {
+      "subject": "hall_of_winds",
+      "predicate": "본거지이다",
+      "object": "highland_league",
+      "description": "바람의 홀은 회색 고원 연맹의 회의장이다"
+    },
+    {
+      "subject": "hall_of_winds",
+      "predicate": "보관한다",
+      "object": "treaty_scroll",
+      "description": "첫 서리 조약문 원본은 바람의 홀에 보관되어 있다"
+    },
+    {
+      "subject": "tessal",
+      "predicate": "본거지이다",
+      "object": "salt_guild",
+      "description": "테살 항은 소금 길드의 본거지다"
+    },
+    {
+      "subject": "red_market",
+      "predicate": "안에 있다",
+      "object": "tessal",
+      "description": "붉은 시장은 테살 항 안에 있다"
+    },
+    {
+      "subject": "lantern_sanctum",
+      "predicate": "안에 있다",
+      "object": "lindor",
+      "description": "등불 대성소는 린도르 안에 있다"
+    },
+    {
+      "subject": "lantern_sanctum",
+      "predicate": "본거지이다",
+      "object": "lantern_church",
+      "description": "등불 대성소는 등불 교단의 본산이다"
+    },
+    {
+      "subject": "lantern_sanctum",
+      "predicate": "보관한다",
+      "object": "eternal_lantern",
+      "description": "꺼지지 않는 등불은 등불 대성소에 모셔져 있다"
+    },
+    {
+      "subject": "black_well",
+      "predicate": "북쪽에 있다",
+      "object": "iska",
+      "description": "검은 우물은 이스카 북쪽 황무지에 있다"
+    },
+    {
+      "subject": "frost_gate",
+      "predicate": "본거지이다",
+      "object": "ashbranch_knights",
+      "description": "서리 관문은 잿가지 기사단이 지키는 본거지다"
+    },
+    {
+      "subject": "frost_gate",
+      "predicate": "잇는다",
+      "object": "hall_of_winds",
+      "description": "서리 관문은 강의 땅에서 회색 고원의 바람의 홀로 가는 유일한 고갯길이다"
+    },
+    {
+      "subject": "white_cliff_abbey",
+      "predicate": "보관한다",
+      "object": "dawn_bell",
+      "description": "새벽의 종은 하얀 절벽 수도원에 걸려 있다"
+    },
+    {
+      "subject": "white_cliff_abbey",
+      "predicate": "속한다",
+      "object": "lantern_church",
+      "description": "하얀 절벽 수도원은 등불 교단의 수도원이다"
+    },
+    {
+      "subject": "stone_heart",
+      "predicate": "본거지이다",
+      "object": "tungar",
+      "description": "돌의 심장은 툰가르가 다스리는 드바르의 도시다"
+    },
+    {
+      "subject": "arden",
+      "predicate": "평화를 유지한다",
+      "object": "highland_league",
+      "description": "아르덴 왕국과 회색 고원 연맹은 첫 서리 조약 뒤로 전쟁을 한 적이 없다"
+    },
+    {
+      "subject": "arden",
+      "predicate": "협약을 맺었다",
+      "object": "salt_guild",
+      "description": "아르덴 왕국과 소금 길드는 402년 소금 협약으로 관세를 정했다"
+    },
+    {
+      "subject": "arden",
+      "predicate": "사면하지 않았다",
+      "object": "ashbranch_brotherhood",
+      "description": "아르덴 왕국은 잿가지 형제단을 사면하지 않았다"
+    },
+    {
+      "subject": "ashbranch_knights",
+      "predicate": "충성한다",
+      "object": "arden",
+      "description": "잿가지 기사단은 아르덴 왕국에 충성한다"
+    },
+    {
+      "subject": "ashbranch_knights",
+      "predicate": "적대한다",
+      "object": "ashbranch_brotherhood",
+      "description": "잿가지 기사단과 잿가지 형제단은 서로 적이다"
+    },
+    {
+      "subject": "ashbranch_brotherhood",
+      "predicate": "갈라져 나왔다",
+      "object": "ashbranch_knights",
+      "description": "잿가지 형제단은 잿가지 기사단에서 갈라져 나온 반란 세력이다"
+    },
+    {
+      "subject": "ashbranch_brotherhood",
+      "predicate": "패했다",
+      "object": "ashstone_battle",
+      "description": "잿가지 형제단은 잿돌 전투에서 무너졌다"
+    },
+    {
+      "subject": "salt_guild",
+      "predicate": "군대가 없다",
+      "object": "salt_accord",
+      "description": "소금 길드는 소금 협약에서 군대를 두지 않는다고 다시 약속했다"
+    },
+    {
+      "subject": "lantern_church",
+      "predicate": "겪었다",
+      "object": "lantern_schism",
+      "description": "등불 교단은 371년 등불 분열을 겪었다"
+    },
+    {
+      "subject": "highland_league",
+      "predicate": "맺었다",
+      "object": "first_frost_treaty",
+      "description": "회색 고원 연맹은 301년 첫 서리 조약으로 아르덴 왕국과 대등한 사이가 되었다"
+    },
+    {
+      "subject": "highland_league",
+      "predicate": "일으켰다",
+      "object": "first_frost_uprising",
+      "description": "회색 고원 씨족들은 356년 첫 서리 봉기를 일으켰다"
+    },
+    {
+      "subject": "ashstone_battle",
+      "predicate": "일어났다",
+      "object": "ashstone_valley",
+      "description": "잿돌 전투는 잿돌 골짜기에서 벌어졌다"
+    },
+    {
+      "subject": "fall_of_iska",
+      "predicate": "일어났다",
+      "object": "iska",
+      "description": "이스카 함락은 이스카에서 검은 역병으로 일어났다"
+    },
+    {
+      "subject": "well_sealing",
+      "predicate": "일어났다",
+      "object": "black_well",
+      "description": "검은 우물 봉인은 검은 우물에서 이루어졌다"
+    },
+    {
+      "subject": "lantern_schism",
+      "predicate": "일어났다",
+      "object": "lantern_sanctum",
+      "description": "등불 분열은 등불 대성소에서 일어났다"
+    },
+    {
+      "subject": "salt_accord",
+      "predicate": "일어났다",
+      "object": "tessal",
+      "description": "소금 협약은 테살 항에서 맺어졌다"
+    },
+    {
+      "subject": "elian_coronation",
+      "predicate": "일어났다",
+      "object": "lindor",
+      "description": "엘리안 대관식은 린도르에서 열렸다"
+    },
+    {
+      "subject": "ferry_fire",
+      "predicate": "일어났다",
+      "object": "moonlight_ferry",
+      "description": "달빛 나루 대화재는 달빛 나루 선착장에서 일어났다"
+    },
+    {
+      "subject": "first_frost_uprising",
+      "predicate": "일어났다",
+      "object": "frost_gate",
+      "description": "첫 서리 봉기는 서리 관문의 통행세 때문에 일어났다"
+    },
+    {
+      "subject": "first_frost_treaty",
+      "predicate": "이전에 일어났다",
+      "object": "first_frost_uprising",
+      "description": "첫 서리 조약은 첫 서리 봉기보다 55년 앞선 일이다"
+    },
+    {
+      "subject": "starsteel_discovery",
+      "predicate": "이전에 일어났다",
+      "object": "well_sealing",
+      "description": "별철 발견은 검은 우물 봉인보다 50년 앞선 일이다"
+    },
+    {
+      "subject": "lantern_schism",
+      "predicate": "이전에 일어났다",
+      "object": "ashstone_battle",
+      "description": "등불 분열은 잿돌 전투보다 18년 앞선 일이다"
+    },
+    {
+      "subject": "fall_of_iska",
+      "predicate": "이전에 일어났다",
+      "object": "ashstone_battle",
+      "description": "이스카 함락은 잿돌 전투보다 한 해 앞선 일이다"
+    },
+    {
+      "subject": "ashstone_battle",
+      "predicate": "이전에 일어났다",
+      "object": "well_sealing",
+      "description": "잿돌 전투는 검은 우물 봉인보다 한 해 앞선 일이다"
+    },
+    {
+      "subject": "well_sealing",
+      "predicate": "이전에 일어났다",
+      "object": "elian_coronation",
+      "description": "검은 우물 봉인은 엘리안 대관식보다 5년 앞선 일이다"
+    },
+    {
+      "subject": "elian_coronation",
+      "predicate": "이전에 일어났다",
+      "object": "salt_accord",
+      "description": "엘리안 대관식은 소금 협약보다 7년 앞선 일이다"
+    },
+    {
+      "subject": "salt_accord",
+      "predicate": "이전에 일어났다",
+      "object": "ferry_fire",
+      "description": "소금 협약은 달빛 나루 대화재보다 3년 앞선 일이다"
+    },
+    {
+      "subject": "dawn_sword",
+      "predicate": "재료이다",
+      "object": "starsteel_discovery",
+      "description": "새벽의 검은 별철 발견 뒤 돌의 심장에서 나온 별철로 만들었다"
+    },
+    {
+      "subject": "well_seal",
+      "predicate": "쓰였다",
+      "object": "well_sealing",
+      "description": "검은 우물의 인장은 검은 우물 봉인에 쓰였다"
+    },
+    {
+      "subject": "dawn_bell",
+      "predicate": "관계가 없다",
+      "object": "dawn_sword",
+      "description": "새벽의 종과 새벽의 검은 이름만 닮았을 뿐 아무 관계가 없다"
+    },
+    {
+      "subject": "salt_ring",
+      "predicate": "봉했다",
+      "object": "salt_accord",
+      "description": "소금 협약은 소금 인장 반지로 봉해졌다"
+    },
+    {
+      "subject": "iska_map",
+      "predicate": "그린다",
+      "object": "iska",
+      "description": "이스카의 지도는 몰락 전 이스카를 그린 유일한 완전한 지도다"
+    },
+    {
+      "subject": "dargo_mask",
+      "predicate": "소유했었다",
+      "object": "dargo",
+      "description": "다르고의 가면은 다르고가 죽을 때까지 쓰던 가면이다"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "c01",
+      "kind": "forbidden_fact",
+      "statement": "엘리안 왕은 잿돌 전투에 참전하지 않았다. 참전했거나 싸웠다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "엘리안은 잿돌 전투에 참전하지 않았고, 그때 테살 항에 있었다."
+    },
+    {
+      "id": "c02",
+      "kind": "forbidden_fact",
+      "statement": "다르고는 잿돌 전투에서 죽었다. 살아 있다거나 다시 나타났다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "다르고는 389년 잿돌 전투에서 죽었고 지금 살아 있지 않다."
+    },
+    {
+      "id": "c03",
+      "kind": "forbidden_fact",
+      "statement": "검은 우물은 봉인된 채다. 봉인이 풀렸거나 우물이 열렸다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "검은 우물은 390년에 봉인된 뒤 지금까지 열린 적이 없다."
+    },
+    {
+      "id": "c04",
+      "kind": "forbidden_fact",
+      "statement": "새벽의 검은 하렌드 발크가 지니고 있고 부러지거나 사라지지 않았다. 잿돌 전투에서 쓰였다는 서술도 금지한다(401년에 만들어졌다).",
+      "checkable_by": "nli",
+      "nli_premise": "새벽의 검은 401년에 만들어져 하렌드 발크가 지니고 있으며, 잿돌 전투에서 쓰이지 않았다."
+    },
+    {
+      "id": "c05",
+      "kind": "forbidden_fact",
+      "statement": "이스카는 폐허다. 재건되었거나 사람이 산다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "이스카는 388년에 버려진 뒤 다시 짓지 않았고 지금도 아무도 살지 않는 폐허다."
+    },
+    {
+      "id": "c06",
+      "kind": "forbidden_fact",
+      "statement": "갈렌은 등불 분열 뒤 린도르에 돌아온 적이 없다. 린도르나 등불 대성소에 있다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "갈렌은 371년부터 고요한 숲에 살고 린도르에 돌아온 적이 없다."
+    },
+    {
+      "id": "c07",
+      "kind": "forbidden_fact",
+      "statement": "하렌과 하렌드 발크는 다른 사람이며 친족이 아니다. 둘을 같은 사람으로 쓰거나 형제, 부자로 쓰는 것을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "하렌은 달빛 나루의 대장장이고 하렌드 발크는 기사단장이며, 두 사람은 친족이 아니다."
+    },
+    {
+      "id": "c08",
+      "kind": "forbidden_fact",
+      "statement": "미르나와 미르네는 다른 사람이며 사제 관계가 아니다. 미르네가 마법을 쓴다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "미르네는 마법을 쓰지 못하는 여관 주인이고, 미르나와 만난 적이 없다."
+    },
+    {
+      "id": "c09",
+      "kind": "forbidden_fact",
+      "statement": "이졸데 공주는 398년에 태어났다. 잿돌 전투(389년)나 검은 우물 봉인(390년)을 보았다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "이졸데는 398년에 태어나 잿돌 전투와 검은 우물 봉인을 본 적이 없다."
+    },
+    {
+      "id": "c10",
+      "kind": "forbidden_fact",
+      "statement": "에르나 브란과 마르쿠스 선왕은 죽은 사람이다. 지금 살아서 말하거나 행동한다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "에르나 브란은 320년에, 마르쿠스는 395년에 죽었고 둘 다 지금 살아 있지 않다."
+    },
+    {
+      "id": "c11",
+      "kind": "forbidden_fact",
+      "statement": "핍은 린도르 밖으로 나간 적이 없다. 바다, 고원, 다른 도시를 가 봤다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "핍은 린도르 성벽 밖으로 나가 본 적이 없다."
+    },
+    {
+      "id": "c12",
+      "kind": "forbidden_fact",
+      "statement": "라에넬은 고요한 숲 밖으로 나가지 않는다. 숲 밖에 있다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "라에넬은 고요한 숲 밖으로 나간 적이 없다."
+    },
+    {
+      "id": "c13",
+      "kind": "forbidden_fact",
+      "statement": "첫 서리 조약(301년)과 첫 서리 봉기(356년)는 다른 사건이다. 둘을 섞거나 순서를 바꾸는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "첫 서리 조약은 301년에, 첫 서리 봉기는 356년에 있었던 서로 다른 일이다."
+    },
+    {
+      "id": "c14",
+      "kind": "forbidden_fact",
+      "statement": "드바르는 바다에 나가지 않고 외부인을 돌의 심장에 들이지 않는다. 드바르가 배를 탄다거나 외부인이 돌의 심장 안에 들어갔다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "드바르는 바다에 나가지 않고, 외부인은 돌의 심장 안에 들어간 적이 없다."
+    },
+    {
+      "id": "c15",
+      "kind": "tone",
+      "statement": "신은 세상에 직접 나타나지 않는다. 신이 등장해 말하거나 행동하는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "에르바스에서 신이 사람 앞에 직접 나타난 적은 한 번도 없다."
+    },
+    {
+      "id": "c16",
+      "kind": "forbidden_fact",
+      "statement": "아르덴 왕국과 회색 고원 연맹은 전쟁 중이 아니다. 두 세력이 싸우거나 연맹이 왕국의 신하라는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "아르덴 왕국과 회색 고원 연맹은 대등한 사이이며 지금 전쟁 중이 아니다."
+    },
+    {
+      "id": "c17",
+      "kind": "forbidden_fact",
+      "statement": "소금 길드는 군대를 두지 않는다. 길드의 병사, 함대, 군대를 서술하는 것을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "소금 길드는 군대와 병사를 두지 않는다."
+    },
+    {
+      "id": "c18",
+      "kind": "forbidden_fact",
+      "statement": "새벽의 종은 391년 이후 울린 적이 없다. 종이 울렸다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "새벽의 종은 391년에 울린 뒤 지금까지 한 번도 울리지 않았다."
+    },
+    {
+      "id": "c19",
+      "kind": "forbidden_fact",
+      "statement": "별철은 돌의 심장에서만 난다. 다른 곳에서 별철을 캤다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "별철은 돌의 심장에서만 나는 금속이다."
+    },
+    {
+      "id": "c20",
+      "kind": "forbidden_fact",
+      "statement": "실피는 마법을 쓰지 않는다. 라에넬이나 실피가 마법을 부린다는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "실피는 마법을 쓰지 않는다."
+    },
+    {
+      "id": "c21",
+      "kind": "era",
+      "statement": "화약과 증기기관이 없는 시대다. 총, 대포, 화약, 기차, 전기 등 해당 기술의 언급을 금지한다.",
+      "checkable_by": "rule",
+      "forbidden_terms": [
+        "총",
+        "권총",
+        "소총",
+        "대포",
+        "화약",
+        "폭탄",
+        "기차",
+        "증기기관",
+        "전기",
+        "전등",
+        "엔진"
+      ]
+    },
+    {
+      "id": "c22",
+      "kind": "era",
+      "statement": "현대 문물이 없는 시대다. 자동차, 비행기, 컴퓨터, 휴대폰, 인터넷, 사진, 시계(기계식) 등의 언급을 금지한다.",
+      "checkable_by": "rule",
+      "forbidden_terms": [
+        "자동차",
+        "비행기",
+        "컴퓨터",
+        "휴대폰",
+        "핸드폰",
+        "인터넷",
+        "사진",
+        "텔레비전",
+        "라디오",
+        "손목시계"
+      ]
+    },
+    {
+      "id": "c23",
+      "kind": "tone",
+      "statement": "실제 세계의 지명, 나라, 종교를 언급하지 않는다.",
+      "checkable_by": "rule",
+      "forbidden_terms": [
+        "한국",
+        "서울",
+        "유럽",
+        "미국",
+        "일본",
+        "중국",
+        "로마",
+        "파리",
+        "런던",
+        "예수",
+        "부처",
+        "알라",
+        "제우스",
+        "오딘",
+        "토르"
+      ]
+    },
+    {
+      "id": "c24",
+      "kind": "tone",
+      "statement": "고원 사람은 아르덴 왕 앞에서 무릎을 꿇지 않는다. 오스카르나 카일라가 왕에게 무릎 꿇는 서술을 금지한다.",
+      "checkable_by": "nli",
+      "nli_premise": "회색 고원 사람은 첫 서리 조약에 따라 아르덴 왕 앞에서 무릎을 꿇지 않는다."
+    }
+  ],
+  "terms": [
+    {
+      "term": "에르바스",
+      "kind": "world",
+      "aliases": [
+        "에르바스 대륙"
+      ],
+      "description": "이 이야기가 펼쳐지는 대륙. 가운데 강의 땅, 북쪽 회색 고원, 남쪽 소금 해안으로 나뉜다."
+    },
+    {
+      "term": "창건력",
+      "kind": "era",
+      "aliases": [],
+      "description": "에르바스에서 쓰는 연호. 지금은 창건력 412년이다. 잿돌 전투는 389년, 엘리안 대관식은 395년의 일이다."
+    },
+    {
+      "term": "강의 땅",
+      "kind": "region",
+      "aliases": [],
+      "description": "에르바스 가운데의 큰 강 유역. 아르덴 왕국의 땅이며 린도르, 달빛 나루, 잿돌 골짜기, 고요한 숲, 이스카가 있다."
+    },
+    {
+      "term": "회색 고원",
+      "kind": "region",
+      "aliases": [],
+      "description": "에르바스 북쪽의 높은 고원. 회색 고원 연맹의 씨족들이 살고 그 아래 땅속에 돌의 심장이 있다. 서리 관문으로만 오갈 수 있다."
+    },
+    {
+      "term": "소금 해안",
+      "kind": "region",
+      "aliases": [],
+      "description": "에르바스 남쪽 바닷가. 소금 길드가 다스리는 테살 항과 등불 교단의 하얀 절벽 수도원이 있다."
+    },
+    {
+      "term": "드바르",
+      "kind": "race",
+      "aliases": [],
+      "description": "회색 고원 아래 돌의 심장에 사는 키 작은 종족. 별철을 다루며 바다에 나가지 않고 외부인을 도시에 들이지 않는다."
+    },
+    {
+      "term": "실피",
+      "kind": "race",
+      "aliases": [],
+      "description": "고요한 숲에 사는 오래 사는 종족. 마법을 쓰지 않으며 숲 밖으로 거의 나오지 않는다."
+    },
+    {
+      "term": "은잎",
+      "kind": "currency",
+      "aliases": [
+        "은잎 동전"
+      ],
+      "description": "에르바스 전역에서 쓰는 은화. 소금 길드가 무게를 보증한다."
+    },
+    {
+      "term": "별철",
+      "kind": "material",
+      "aliases": [],
+      "description": "돌의 심장에서만 나는 푸른빛 금속. 창건력 340년 툰가르가 처음 찾았고, 새벽의 검과 검은 우물의 인장이 이것으로 만들어졌다."
+    },
+    {
+      "term": "고원 수호자",
+      "kind": "title",
+      "aliases": [],
+      "description": "회색 고원 연맹 우두머리의 칭호. 지금은 오스카르 브란이 지닌다."
+    },
+    {
+      "term": "등불지기",
+      "kind": "title",
+      "aliases": [],
+      "description": "등불 교단 대사제의 칭호. 지금은 토발드가 지닌다."
+    },
+    {
+      "term": "검은 역병",
+      "kind": "other",
+      "aliases": [],
+      "description": "창건력 388년 이스카를 무너뜨린 병. 검은 우물에서 퍼졌다고 전해지며 390년 봉인 뒤 잦아들어 391년에 끝났다."
+    }
+  ],
+  "name_whitelist": [
+    "엘리안",
+    "엘리안 왕",
+    "아르덴의 왕",
+    "이졸데",
+    "이졸데 공주",
+    "마르쿠스",
+    "마르쿠스 선왕",
+    "선왕",
+    "하렌드 발크",
+    "하렌드",
+    "발크 단장",
+    "하렌",
+    "대장장이 하렌",
+    "세드릭 몰",
+    "세드릭",
+    "몰 재상",
+    "미르나",
+    "궁정 마법사 미르나",
+    "미르네",
+    "여관 주인 미르네",
+    "오스카르 브란",
+    "오스카르",
+    "고원 수호자 오스카르",
+    "에르나 브란",
+    "에르나",
+    "카일라 브란",
+    "카일라",
+    "토발드",
+    "대사제 토발드",
+    "등불지기 토발드",
+    "이렌",
+    "원장 이렌",
+    "갈렌",
+    "배교자 갈렌",
+    "벤토 사르",
+    "벤토",
+    "상단주 벤토",
+    "로자 마렌",
+    "로자",
+    "선장 로자",
+    "다르고",
+    "가면의 다르고",
+    "베일",
+    "툰가르",
+    "장로 툰가르",
+    "라에넬",
+    "장로 라에넬",
+    "마브",
+    "노파 마브",
+    "오렌 케이",
+    "오렌",
+    "학자 오렌",
+    "핍",
+    "심부름꾼 핍",
+    "린도르",
+    "아르덴의 수도",
+    "달빛 나루",
+    "잿돌 골짜기",
+    "잿돌 요새",
+    "바람의 홀",
+    "테살 항",
+    "테살",
+    "붉은 시장",
+    "등불 대성소",
+    "고요한 숲",
+    "검은 우물",
+    "서리 관문",
+    "하얀 절벽 수도원",
+    "이스카",
+    "몰락한 이스카",
+    "돌의 심장",
+    "아르덴 왕국",
+    "아르덴",
+    "회색 고원 연맹",
+    "고원 연맹",
+    "소금 길드",
+    "소금 상단",
+    "등불 교단",
+    "잿가지 기사단",
+    "잿가지 형제단",
+    "형제단",
+    "첫 서리 조약",
+    "별철 발견",
+    "첫 서리 봉기",
+    "등불 분열",
+    "이스카 함락",
+    "잿돌 전투",
+    "검은 우물 봉인",
+    "엘리안 대관식",
+    "소금 협약",
+    "달빛 나루 대화재",
+    "새벽의 검",
+    "새벽의 종",
+    "검은 우물의 인장",
+    "첫 서리 조약문",
+    "꺼지지 않는 등불",
+    "소금 인장 반지",
+    "이스카의 지도",
+    "다르고의 가면",
+    "에르바스",
+    "에르바스 대륙",
+    "창건력",
+    "강의 땅",
+    "회색 고원",
+    "소금 해안",
+    "드바르",
+    "실피",
+    "은잎",
+    "은잎 동전",
+    "별철",
+    "고원 수호자",
+    "등불지기",
+    "검은 역병"
+  ]
+}
