@@ -16,6 +16,7 @@
 | `questline/lines.py` | 라인 정의를 읽고 형식을 검사하는 코드 |
 | `questline/checker.py` | 규칙 기반 검사기. 규칙 R0~R7 과 함정 지점 판정(`probe_status`) |
 | `questline/prompting.py`, `pipeline/prompting.py` | 생성 요청과 재생성 요청(검사기 피드백 C2, 자기 수정 C4)을 만드는 코드, 출력 파서 |
+| `examples/` | 실제로 보낸 글의 예 - 라인 M40 의 생성 요청 전문, 조건 C2 의 피드백 두 건, 조건 C4 의 메시지 |
 | `questline/run.py`, `questline/score.py` | 교정 조건 C1~C4 의 실행과 셀 채점 |
 | `questline/analysis.py`, `scripts/analyze_questline.py` | 본 실험 분석(H1~H4, 비용 지표) |
 | `analysis/` | 분석 결과(`main_analysis.json`, `.txt`, `main_results.md`), C4 탐색 분석(`selfcorrect_c4.*`), 사후 분석 스크립트 |
@@ -104,7 +105,7 @@ cmp /tmp/c4.json analysis/selfcorrect_c4.json && cmp /tmp/c4.txt analysis/selfco
 3. **분석 스크립트 정정** (2026-10-15, 커밋 `a721922`) - `questline/analysis.py` 의 죽음 함정 민감도 분류가 인물 이름을 부분 문자열로 대조해,
    다른 인물의 더 긴 이름 안에 든 경우까지 셌다. 이를 고친 뒤 고정 분석을 다시 돌렸다. 바뀐 값은 죽음 함정 민감도 수치 넷이고 H1~H4 의 결과는 글자까지 같다(`analysis/main_results.md` "고정 분석 정정").
 4. **사후 분석** - `analysis/posthoc_descriptives.py`, `analysis/sensitivity_h4_death_q3.py`, `analysis/posthoc_undetermined.py` 는 미리 정한 분석이 아니다. 각 파일 머리말에 더한 날짜와 이유가 있다. H4 는 판정 기준에 민감하다 - 죽음 함정에서 개요에 나온 다른 생존 인물을 고른 경우를 판정 불가로 돌리면 유의하지 않고(p 0.277), 판정 불가 지점을 모두 통과로 처리해도 유의하지 않으며(p 0.069), 판정 불가를 H4 에 가장 불리하게 처리하면 p 0.350 이다(`posthoc_undetermined.py` 의 출력).
-5. **공개하며 바꾼 것** - 아래 아홉 가지이고, 그 밖의 파일은 작업 저장소의 파일과 글자까지 같다. `README.md`, `LICENSE`, `LICENSE-DATA.md`, `CHECKSUMS.sha256` 은 공개하며 새로 넣은 파일이다. 바꾼 뒤에도 본 실험 분석과 C4 분석의 출력은 `analysis/` 의 저장된 결과와 글자까지 같다.
+5. **공개하며 바꾼 것** - 아래 아홉 가지이고, 그 밖의 파일은 작업 저장소의 파일과 글자까지 같다. `README.md`, `LICENSE`, `LICENSE-DATA.md`, `CHECKSUMS.sha256`, `examples/` 는 공개하며 새로 넣은 파일이다. 바꾼 뒤에도 본 실험 분석과 C4 분석의 출력은 `analysis/` 의 저장된 결과와 글자까지 같다.
    - `runs/questline/*/cells.jsonl`: 호출 식별자 두 항목(`generation_id`, `generation.upstream_id`)을 지웠다. 그 밖의 값은 같다
    - `runs/questline/*/README.md`: 위 사실과 공개본의 지문을 한 줄 더했다
    - `tests/test_questline.py`: 라인 확정 화면의 테스트 1건을 뺐다(화면 도구를 넣지 않았다)
