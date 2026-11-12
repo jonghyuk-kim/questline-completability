@@ -54,6 +54,12 @@ cmp /tmp/c4.json analysis/selfcorrect_c4.json && cmp /tmp/c4.txt analysis/selfco
 .venv/bin/python analysis/posthoc_descriptives.py      # 사후 기술 수치(실패 유형 구성, 회차별 누적 비율 등)
 .venv/bin/python analysis/sensitivity_h4_death_q3.py   # H4 민감도(죽음 함정에서 물은 인물 분류)
 .venv/bin/python analysis/posthoc_undetermined.py      # 판정 불가 지점 수와 그 처리에 따른 H4
+.venv/bin/python analysis/posthoc_state_only.py        # 규칙 R2, R4, R6, R7 만으로 계산한 진행 가능 비율
+.venv/bin/python analysis/posthoc_c4_first_fail.py     # 첫 출력이 진행 불가였던 셀의 교정률 (C2, C3, C4)
+.venv/bin/python analysis/posthoc_trap_correction.py   # 함정 종류별 교정 비율과 조건 × 함정 종류 상호작용
+.venv/bin/python analysis/posthoc_known_answer.py      # 모범 풀이와 오류를 넣은 풀이로 검사기 확인
+.venv/bin/python analysis/posthoc_misjudgment.py       # 검사기 판정이 틀렸다고 가정한 H1, H2 재검정
+.venv/bin/python analysis/posthoc_discussion.py        # 논문 고찰에 실은 수치
 ```
 
 ## 실험 구성
@@ -92,6 +98,7 @@ cmp /tmp/c4.json analysis/selfcorrect_c4.json && cmp /tmp/c4.txt analysis/selfco
 | C4 의 분석 스크립트 | (태그 없음) | `cbf2652e2d54bf80f9e2effe2e632a50c4ec5e67` | 2026-10-13 18:53:51 | 2026-10-13 18:53:53 | C4 2026-10-13 18:54:08 |
 
 - `assets-v2` 부터 본 실험까지 `worldbible/worldbible_v1.json`, `scenarios/questlines_v1.yaml`, `questline/checker.py` 는 바뀌지 않았다.
+- `assets-v2` 뒤 본 실험 전에 모델 응답에서 JSON 을 읽는 부분(`questline/prompting.py` 의 `split_json`)을 한 번 고쳤다(2026-10-12 18:33, 커밋 `ff80eeafb05aed13c479894a1032db10233e826b`). 올바른 JSON 객체 뒤에 다른 문자열이 붙은 응답도 읽게 한 것이고(예비 측정의 GPT 응답 2건), 그 뒤 본 실험이 끝날 때까지 이 부분은 바뀌지 않았다.
   출력 파서와 판정 경로(`questline/prompting.py`, `questline/run.py`, `questline/score.py`)는 예비 측정 뒤 `analysis-v4` 전에 고쳤다.
 - 분석 스크립트는 `analysis-v1`(2026-10-12 19:33) 뒤 본 실험 전에 세 번 더해 다시 고정했다 - `analysis-v2`(10-13 13:47, 정가 기준 비용과 함정 종류 × 모델 탐색), `analysis-v3`(14:21, 가격과 무관한 호출 수와 토큰 수 지표), `analysis-v4`(14:26, 상태 변화와 함정 사이 거리 탐색). 네 번 모두 본 실험 첫 생성 요청보다 앞이다(`questline/analysis.py` 머리말).
 - 외부 기관에 사전 등록하지는 않았다.
@@ -104,7 +111,7 @@ cmp /tmp/c4.json analysis/selfcorrect_c4.json && cmp /tmp/c4.txt analysis/selfco
 2. **조건 C4 추가** (2026-10-13, 커밋 `cbf2652`) - 본 실험 뒤에 `questline/prompting.py`, `questline/run.py` 에 C4 를 더했다. C1~C3 의 동작은 바꾸지 않았다.
 3. **분석 스크립트 정정** (2026-10-15, 커밋 `a721922`) - `questline/analysis.py` 의 죽음 함정 민감도 분류가 인물 이름을 부분 문자열로 대조해,
    다른 인물의 더 긴 이름 안에 든 경우까지 셌다. 이를 고친 뒤 고정 분석을 다시 돌렸다. 바뀐 값은 죽음 함정 민감도 수치 넷이고 H1~H4 의 결과는 글자까지 같다(`analysis/main_results.md` "고정 분석 정정").
-4. **사후 분석** - `analysis/posthoc_descriptives.py`, `analysis/sensitivity_h4_death_q3.py`, `analysis/posthoc_undetermined.py` 는 미리 정한 분석이 아니다. 각 파일 머리말에 더한 날짜와 이유가 있다. H4 는 판정 기준에 민감하다 - 죽음 함정에서 개요에 나온 다른 생존 인물을 고른 경우를 판정 불가로 돌리면 유의하지 않고(p 0.277), 판정 불가 지점을 모두 통과로 처리해도 유의하지 않으며(p 0.069), 판정 불가를 H4 에 가장 불리하게 처리하면 p 0.350 이다(`posthoc_undetermined.py` 의 출력).
+4. **사후 분석** - `analysis/posthoc_descriptives.py`, `analysis/sensitivity_h4_death_q3.py` 와 논문 수정 과정에서 2026-11-12 에 더한 일곱 파일(`analysis/posthoc_undetermined.py`, `posthoc_state_only.py`, `posthoc_c4_first_fail.py`, `posthoc_trap_correction.py`, `posthoc_known_answer.py`, `posthoc_misjudgment.py`, `posthoc_discussion.py`)은 미리 정한 분석이 아니다. 각 파일 머리말에 더한 날짜와 이유가 있다. H4 는 판정 기준에 민감하다 - 죽음 함정에서 개요에 나온 다른 생존 인물을 고른 경우를 판정 불가로 돌리면 유의하지 않고(p 0.277), 판정 불가 지점을 모두 통과로 처리해도 유의하지 않으며(p 0.069), 판정 불가를 H4 에 가장 불리하게 처리하면 p 0.350 이다(`posthoc_undetermined.py` 의 출력).
 5. **공개하며 바꾼 것** - 아래 아홉 가지이고, 그 밖의 파일은 작업 저장소의 파일과 글자까지 같다. `README.md`, `LICENSE`, `LICENSE-DATA.md`, `CHECKSUMS.sha256`, `examples/` 는 공개하며 새로 넣은 파일이다. 바꾼 뒤에도 본 실험 분석과 C4 분석의 출력은 `analysis/` 의 저장된 결과와 글자까지 같다.
    - `runs/questline/*/cells.jsonl`: 호출 식별자 두 항목(`generation_id`, `generation.upstream_id`)을 지웠다. 그 밖의 값은 같다
    - `runs/questline/*/README.md`: 위 사실과 공개본의 지문을 한 줄 더했다
